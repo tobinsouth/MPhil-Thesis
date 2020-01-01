@@ -1,0 +1,67 @@
+\documentclass[12pt,a4paper]{book}
+\title{My beautiful dissertation}
+\author{Tobin South}
+\date{\today}
+\def\degree{Masters of Philosophy}
+\def\discipline{Applied Mathematics}
+
+
+% Any packages should go here
+\usepackage{graphicx,natbib,thesis} 
+
+
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{xcolor}			% allows more colours
+
+% For subfigures
+\usepackage{subcaption}
+
+%% Add spacing to tables 
+%\usepackage{array}
+%\setlength\extrarowheight{2pt} % or whatever amount is appropriate
+
+%% Add spacing to table captions
+%\usepackage{caption} 
+%\captionsetup[table]{skip=10pt}
+
+\begin{document}
+\frontmatter
+
+\maketitle
+
+% Make the following tables
+\tableofcontents
+\listoftables
+\listoffigures
+
+% Import the various things
+\include{front/statement}
+\include{front/acknowledgements}
+\include{front/dedication}
+\include{front/abstract}
+
+\mainmatter
+
+% Import the chapter files
+\include{chapter1/chapter}
+\include{chapter2/chapter}
+\include{chapter3/chapter}
+% add as many as you like
+
+\appendix
+% Import the appendices 
+\include{appendix1/appendix} 
+\include{appendix2/appendix} 
+
+\backmatter
+% Add the bibliography to the table of contents
+\addcontentsline{toc}{chapter}{Bibliography}
+
+% What style to use and what file to use for the bibliography
+\bibliographystyle{agsm}
+\bibliography{bibliography/thesis}
+
+\end{document}
+

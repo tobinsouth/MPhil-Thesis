@@ -1,0 +1,24 @@
+% thesis.sty created by AJR Jan 2016
+% Do not change without consultation
+
+% add extra information to date so included on titlepage
+\let\my@date\@date
+\def\@date{\my@date
+\\\vfil\vfil\em
+Thesis submitted for the degree of\\
+\ifx\degree\undefined Specify {\tt$\backslash$degree}%
+    \else\degree\fi\\
+in\\
+\ifx\discipline\undefined Specify {\tt$\backslash$discipline}%
+    \else\discipline\fi\\
+at The University of Adelaide\\
+Faculty of Engineering, Computer and Mathematical Sciences\\
+School of Mathematical Sciences
+\\\vfil
+\includegraphics{UoA_logo_col_vert}
+}
+
+% Have useful default headings
+\pagestyle{headings}
+% but avoid all capitals
+\let\MakeUppercase\textsf
