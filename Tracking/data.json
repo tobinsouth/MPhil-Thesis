@@ -1,0 +1,31 @@
+{
+    "2020-01-01": {
+        "latex_counts": {
+            "..//Tex/appendix1/appendix.tex": "8",
+            "..//Tex/appendix2/appendix.tex": "6",
+            "..//Tex/chapter1/chapter.tex": "6",
+            "..//Tex/chapter2/chapter.tex": "7",
+            "..//Tex/chapter3/chapter.tex": "9",
+            "..//Tex/front/abstract.tex": "8",
+            "..//Tex/front/acknowledgements.tex": "6",
+            "..//Tex/front/dedication.tex": "6",
+            "..//Tex/front/statement.tex": "494",
+            "..//Tex/thesis.tex": "131"
+        },
+        "times": [
+            "16:20:23"
+        ],
+        "word_counts": {
+            "..//Tex/appendix1/appendix.tex": 4,
+            "..//Tex/appendix2/appendix.tex": 2,
+            "..//Tex/chapter1/chapter.tex": 2,
+            "..//Tex/chapter2/chapter.tex": 3,
+            "..//Tex/chapter3/chapter.tex": 5,
+            "..//Tex/front/abstract.tex": 5,
+            "..//Tex/front/acknowledgements.tex": 2,
+            "..//Tex/front/dedication.tex": 2,
+            "..//Tex/front/statement.tex": 202,
+            "..//Tex/thesis.tex": 11
+        }
+    }
+}

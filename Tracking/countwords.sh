@@ -24,3 +24,4 @@ done < all_tex_files.out
 python save_word_counts.py
 
 
+
