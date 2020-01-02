@@ -30,6 +30,7 @@
     },
     "2020-01-02": {
         "latex_counts": {
+            "..//Notes/Plan/ThesisPlan.tex": "210",
             "..//Tex/appendix1/appendix.tex": "8",
             "..//Tex/appendix2/appendix.tex": "6",
             "..//Tex/background/background.tex": "8",
@@ -45,10 +46,11 @@
         "times": [
             "12:52:07",
             "12:53:22",
-            "12:54:00"
+            "12:54:00",
+            "12:56:01"
         ],
         "word_counts": {
-            "..//Notes/Plan/Thesis Plan.tex": 194,
+            "..//Notes/Plan/ThesisPlan.tex": 194,
             "..//Tex/appendix1/appendix.tex": 4,
             "..//Tex/appendix2/appendix.tex": 2,
             "..//Tex/background/background.tex": 4,
