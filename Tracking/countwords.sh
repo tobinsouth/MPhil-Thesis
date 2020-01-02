@@ -17,7 +17,7 @@ done < all_tex_files.out
 # Find all raw counts and add to file
 truncate -s 0 latex_counts.out
 while read file; do
-	wc -w $file >> latex_counts.out
+	wc -w "$file" >> latex_counts.out
 done < all_tex_files.out
 
 # Save using python script
