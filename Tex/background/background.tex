@@ -15,4 +15,53 @@ These methods face a daunting challenge, language is not only complex and often 
 
 
 \subsection{Entropy Basics}
+Entropy is a measure of the uncertainty of a random variable. In the context of information theory, this is defined by \autoref{shannon}, often refereed to as Shannon entropy, named after Claude Shannon for his work in 1948 studying the quantiles of information in transmitted messages~\todo{cite Claude shannon 1948}.
 
+\begin{definition}[Shannon Entropy]
+	Let $X$ be a discrete random variable with alphabet $\mathcal{X}$ and probability mass function $p(x) = P(X = x), x \in \mathcal{X}$.
+	The entropy $H(X)$ of the discrete random variable X, measured in bits, is 
+	\begin{equation}\label{eq:shannon}
+	H(X)=-\sum_{x \in \mathcal{X}} p(x) \log_2 p(x)
+	\end{equation}
+\end{definition} 
+
+The entropy of the random variable is measured in bits. A bit can have two states, typically 0 or 1. The entropy of a random variable is the number of bits on average that is required to describe the random variable in question. To measure the entropy in bits, we use a logarithm of base 2, and all logarithms throughout this work are assumed to be in based 2, unless otherwise specified.
+
+To give a typical example of entropy, if a fair coin is tossed there are two equally probable outcomes, giving an entropy of 1 bit. Further, we use the convention of $0\log 0 = 0$, which sensibly means that adding a state with 0 probably to the random variable does not change it's entropy.
+
+\begin{remark}[Suprise]
+	The entropy of the random variable X can also be described in terms of the expected surprise, where the surprise of a state is $log \frac{1}{p(x)}$.
+	\begin{equation}
+		H(X) = \mathbb{E} \left[ \frac{1}{p(x)} \right]
+	\end{equation}
+\end{remark}	
+
+
+
+\todo{add some filler}
+
+
+\begin{lemma}
+	The entropy of a random variable is strictly non-negative, $H(X) \geq 0$.
+\end{lemma}
+
+\begin{proof}
+	$0 \leq p(x) \leq 1$ which implies that $log \frac{1}{p(x)} \geq 0$,
+	hence the sum of products of strictly non-negative terms will always be non-negative. 
+\end{proof}
+
+
+\begin{definition}[Joint Entropy]
+	content...
+\end{definition}
+
+
+
+
+\begin{definition}[Conditional Entropy]
+	content...
+\end{definition}
+
+
+
+\subsection{Predictability}

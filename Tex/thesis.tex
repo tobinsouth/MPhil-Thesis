@@ -14,6 +14,8 @@
 \usepackage{url}            % simple URL typesetting
 \usepackage{booktabs}       % professional-quality tables
 \usepackage{xcolor}			% allows more colours
+\usepackage{amssymb}  % special math fonts
+
 
 % For subfigures
 \usepackage{subcaption}
@@ -21,6 +23,23 @@
 % For SVG
 \usepackage{svg}
 %\usepackage[clean]{svg}
+
+
+% For definitions
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+% Make QED symbol black square
+\renewcommand\qedsymbol{$\blacksquare$}
 
 
 %% Add spacing to tables 
