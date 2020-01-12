@@ -30,7 +30,7 @@ The entropy of the random variable is measured in bits. A bit can have two state
 To give a typical example of entropy, if a fair coin is tossed there are two equally probable outcomes, giving an entropy of 1 bit. Further, we use the convention of $0\log 0 = 0$, which sensibly means that adding a state with 0 probably to the random variable does not change it's entropy.
 
 \begin{remark}[Suprise]
-	The entropy of the random variable X can also be described in terms of the expected surprise, where the surprise of a state is $log \frac{1}{p(x)}$.
+	The entropy of the random variable X can also be described in terms of the expected surprise, where the surprise of a state is $\log \frac{1}{p(x)}$.
 	\begin{equation}
 		H(X) = \mathbb{E} \left[ \frac{1}{p(x)} \right]
 	\end{equation}
@@ -54,6 +54,8 @@ To give a typical example of entropy, if a fair coin is tossed there are two equ
 
 \subsubsection{Joint Entropy and Conditional Entropy}
 
+Above we worked with a single random variable. To extend this we introduce a second discrete random variable $Y$. Using this, we extend the one dimensional entropy to joint entropy. 
+
 \begin{definition}[Joint Entropy]
 	The joint entropy $H(X,Y)$ of a pair of discrete random variables $(X,Y)$ with a joint distribution $p(x,y)$ and state spaces $(\mathcal{X}, \mathcal{Y})$
 	\begin{equation}
@@ -61,9 +63,10 @@ To give a typical example of entropy, if a fair coin is tossed there are two equ
 	\end{equation}
 \end{definition}
 
+From our definition of entropy and the law of total probability we can create a notion of conditional entropy.
 
 \begin{definition}[Conditional Entropy]
-	The conditional entropy $H(X|Y)$ of a pair of discrete random variables $(X,Y)$ with a joint distribution $p(x,y)$ is and state spaces, 
+	The conditional entropy $H(X|Y)$ of two discrete random variables $X$ and $Y$ is defined as, 
 		\begin{align}
 		H(X | Y)&=\sum_{y \in \mathcal{Y}} p(y) H(X |Y=y) \\
 		&=-\sum_{y \in \mathcal{Y}} p(y) \sum_{y \in \mathcal{Y}} p(x | y) \log p(x | y) \\ 
@@ -72,20 +75,101 @@ To give a typical example of entropy, if a fair coin is tossed there are two equ
 		\end{align}
 \end{definition}
 
+
+Subtly different from the \emph{conditional entropy} is the \emph{cross entropy}. Whereas the \emph{conditional entropy} is the amount of information needed to describe $X$ given the knowledge of $Y$, the \emph{cross entropy} is the amount of information needed to describe $X$ given a optimal coding scheme built from $Y$. 
+
+\begin{definition}[Cross Entropy]
+	The cross entropy $H_{\times} (q|p)$ between two probability distributions $p$ nd $q$ is defined as, 
+	\begin{equation}
+	H_{\times} (q|p)= - \sum_{x} p(x) \log {q(x)}
+	\end{equation}
+\end{definition}
+
 \begin{remark}
-	Importantly, note that $H(X|Y) \neq  H(Y|X)$, a property we will exploit later.
+	Importantly, note that $H(X|Y) \neq  H(Y|X)$ and $H_{\times} (q|p) \neq H_{\times} (q|p)$, both properties we will exploit later.
 \end{remark}
 
+\ts{add mutual information?}
+
+\ts{add diagram?}
+
 \subsubsection{Distances}
-We can extend these ideas to explore the distances between probability distributions. Kullback–Leibler divergence (also called Kullback–Leibler distance) is a measure of the inefficiency if one were to assume that a distribution is $p$ when the true distribution is $q$.
+We can extend these ideas to explore a notion of distance between probability distributions. Kullback–Leibler divergence is a measure of the inefficiency if one were to assume that a distribution is $p$ when the true distribution is $q$.
 
 \begin{definition}[Kullback–Leibler divergence]
-	Kullback–Leibler divergence (also called relative entropy), $D(p||q)$,  between two probability mass functions $p(x)$ and $q(x)$ is,
+	Kullback–Leibler divergence (also called relative entropy), $D(p \|q)$,  between two probability distributions $p(x)$ and $q(x)$ is,
 	\begin{align} 
 		D(p \| q) &=\sum_{x \in \mathcal{X}} p(x) \log \frac{p(x)}{q(x)} \\ 
 					 &=E_{p} \log \frac{p(X)}{q(X)} 
 	\end{align}
-	
 \end{definition}
 
+Again, we use the convention that  $0 \log \frac{0}{0} = 0 $ and $p \log \frac{p}{0} = \infty $. 
+
+Conveniently, we can also express the Kullback–Leibler divergence in terms of the cross entropy.
+\begin{lemma}
+		\begin{equation}
+		D(p \| q) = H_p(q) - H(p) 
+		\end{equation}
+\end{lemma}
+\begin{proof}
+	\begin{align}
+		D(p \| q) &=\sum_{x \in \mathcal{X}} p(x) \log \frac{p(x)}{q(x)} \\
+		 &= \sum_{x \in \mathcal{X}} p(x) \log p(x)    -     \sum_{x \in \mathcal{X}} p(x) \log q(x)\\
+		 &= -H(p)   +    H_{\times} (q|p)\\
+	\end{align}
+\end{proof}
+
+The Kullback–Leibler divergence has two difficulties; It's not symmetrical and it can return infinite values. Jensen–Shannon divergence builds from the Kullback–Leibler divergence to solve these problems to a symmetric, finite comparison between probability distributions. 
+
+
+\begin{definition}[Jensen–Shannon divergence]
+ The Jensen–Shannon divergence between two probability distributions $p(x)$ and $q(x)$ is,
+	\begin{equation}
+	\operatorname{JSD}(p \| q)=\frac{1}{2} D(p \| m)+\frac{1}{2} D(q \| m)
+	\end{equation}
+	using a mixture of the distributions, 	$m=\frac{1}{2}(p+q)$.
+\end{definition}
+
+\begin{remark}
+	The square root of the Jensen–Shannon divergence provides a metric, often referred to as Jensen–Shannon distance.
+\end{remark}
+
+\ts{define metric?}
+
+\subsubsection{Process Entropy}
+
+% entropy of a markov chain
+
+Entropy Rate of a stochastic process
+
+\begin{equation}
+H(\mathcal{X})=\lim _{n \rightarrow \infty} H\left(X_{n} | X_{n-1}, X_{n-2}, \ldots, X_{1}\right)
+\end{equation}
+
+On the assumption of stationary
+
+\begin{equation}
+H(\mathcal{X})=\lim _{n \rightarrow \infty} \frac{1}{n} H\left(X_{1}, X_{2}, \ldots, X_{n}\right)
+\end{equation}
+
 \subsubsection{Predictability}
+
+\todo{reword slightly}
+Predictability is the probability $\pi$ that an theoretical predictive algorithm could predict the next state of a process correctly, this often be difficult to obtain. However, an upper bound, $\pi \leq \pi^{max}(S,N)$, is possible through the use of Fano's inequality. For a process with $\pi^{max} = 0.3$, at best we could hope to predict this process correctly 30\% of the time, no matter how good our predicative algorithm. \tocite{R. M. Fano, Transmission of Information (the MIT Press
+	and Wiley, New York and London, 1961)., predictability in human mobility}
+
+\begin{definition}[Maximal Predictability]
+For a process $X$ with entropy $H(X)$, Fano's inequality in the context of our maximal predictability gives,
+\begin{equation}
+H(X) = H(\pi^{max}) + (1 – \pi^{max}) \log (|\mathcal{X}| – 1)
+\end{equation}
+which can be solved numerically for the fundamental limit of the process' predictability $\pi^{max}$.
+\end{definition}
+
+% cross predictaibility
+
+
+
+
+
