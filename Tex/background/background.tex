@@ -137,6 +137,7 @@ The Kullback–Leibler divergence has two difficulties; It's not symmetrical and
 
 \ts{define metric?}
 
+
 \subsubsection{Process Entropy}
 
 % entropy of a markov chain
@@ -153,19 +154,30 @@ On the assumption of stationary
 H(\mathcal{X})=\lim _{n \rightarrow \infty} \frac{1}{n} H\left(X_{1}, X_{2}, \ldots, X_{n}\right)
 \end{equation}
 
+Moving forward, for simplicity we will use X
+
 \subsubsection{Predictability}
 
 \todo{reword slightly}
-Predictability is the probability $\pi$ that an theoretical predictive algorithm could predict the next state of a process correctly, this often be difficult to obtain. However, an upper bound, $\pi \leq \pi^{max}(S,N)$, is possible through the use of Fano's inequality. For a process with $\pi^{max} = 0.3$, at best we could hope to predict this process correctly 30\% of the time, no matter how good our predicative algorithm. \tocite{R. M. Fano, Transmission of Information (the MIT Press
-	and Wiley, New York and London, 1961)., predictability in human mobility}
+Predictability is the probability $\pi$ that an theoretical predictive algorithm could predict the next state of a process correctly, this often be difficult to obtain. However, an upper bound, $\pi \leq \pi^{max}(S,N)$, is possible through the use of Fano's inequality~\cite{fanoTransmissionInformationStatistical1961}. For a process with $\pi^{max} = 0.3$, at best we could hope to predict this process correctly 30\% of the time, no matter how good our predicative algorithm~\cite{songLimitsPredictabilityHuman2010}.
 
 \begin{definition}[Maximal Predictability]
 For a process $X$ with entropy $H(X)$, Fano's inequality in the context of our maximal predictability gives,
 \begin{equation}
 H(X) = H(\pi^{max}) + (1 – \pi^{max}) \log (|\mathcal{X}| – 1)
 \end{equation}
-which can be solved numerically for the fundamental limit of the process' predictability $\pi^{max}$.
 \end{definition}
+
+In order to find $H(\pi^{max})$ we use the binary entropy function~\cite{songLimitsPredictabilityHuman2010}
+\begin{equation}
+H(\pi^{max}) = -\pi^{max} \log(\pi^{max}) - (1 -  \pi^{max}) \log(1 - \pi^{max})
+\end{equation}
+Which finally gives us a form that can be solved numerically for the fundamental limit of the process' predictability $\pi^{max}$
+\begin{equation}\label{eq:predict}
+0 = H(X) + \pi^{max} \log(\pi^{max}) + (1 -  \pi^{max}) \log(1 - \pi^{max}) - (1 – \pi^{max}) \log (|\mathcal{X}| – 1)
+\end{equation}
+Throughout this thesis, maximal predictabilities will found by solving \autoref{eq:predict} using the Powell's conjugate direction method, implemented in python using SciPy~\cite{virtanenSciPyFundamentalAlgorithms2019}, with a starting estimate for the root at $\pi^{max}=0.5$.
+
 
 % cross predictaibility
 
