@@ -106,6 +106,7 @@ We can extend these ideas to explore a notion of distance between probability di
 
 Again, we use the convention that  $0 \log \frac{0}{0} = 0 $ and $p \log \frac{p}{0} = \infty $. 
 
+
 Conveniently, we can also express the Kullback–Leibler divergence in terms of the cross entropy.
 \begin{lemma}
 		\begin{equation}
@@ -174,7 +175,7 @@ H(\pi^{max}) = -\pi^{max} \log(\pi^{max}) - (1 -  \pi^{max}) \log(1 - \pi^{max})
 \end{equation}
 Which finally gives us a form that can be solved numerically for the fundamental limit of the process' predictability $\pi^{max}$
 \begin{equation}\label{eq:predict}
-0 = H(X) + \pi^{max} \log(\pi^{max}) + (1 -  \pi^{max}) \log(1 - \pi^{max}) - (1 – \pi^{max}) \log (|\mathcal{X}| – 1)
+-H(X)  = \pi^{max} \log(\pi^{max}) + (1 -  \pi^{max}) \log(1 - \pi^{max}) - (1 - \pi^{max}) \log (|\mathcal{X}| - 1)
 \end{equation}
 Throughout this thesis, maximal predictabilities will found by solving \autoref{eq:predict} using the Powell's conjugate direction method, implemented in python using SciPy~\cite{virtanenSciPyFundamentalAlgorithms2019}, with a starting estimate for the root at $\pi^{max}=0.5$.
 

@@ -26,6 +26,15 @@
 \usepackage{svg}
 %\usepackage[clean]{svg}
 
+% For multipage tables
+\usepackage{longtable}
+
+% For including a million figures in a loop (or running code)
+\usepackage{python}
+
+%% Get width of thesis
+%\usepackage{printlen}
+%\printlength\textwidth
 
 % For definitions
 \usepackage{amsthm}
@@ -77,6 +86,8 @@
 %\include{front/dedication}
 %\include{front/abstract}
 
+\newpage
+
 \mainmatter
 
 % Import the chapter files
@@ -88,8 +99,9 @@
 
 \appendix
 % Import the appendices 
-\include{appendix1/appendix} 
-\include{appendix2/appendix} 
+%\include{appendix1/account_list} 
+%\include{appendix2/tweet_activity} 
+\include{appendix3/appendix} 
 
 \backmatter
 % Add the bibliography to the table of contents
