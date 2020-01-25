@@ -13,8 +13,18 @@
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}       % hyperlinks
 \usepackage{url}            % simple URL typesetting
 \usepackage{booktabs}       % professional-quality tables
-\usepackage{xcolor}			% allows more colours
 \usepackage{amssymb}  % special math fonts
+
+% Colours
+\usepackage{xcolor}
+\definecolor{LeanLeft}{RGB}{49,102,158}
+\definecolor{Left}{RGB}{159,201,103}
+\definecolor{Center}{RGB}{150,103,159}
+\definecolor{LeanRight}{RGB}{202,153,153}
+\definecolor{Right}{RGB}{199,37,46}
+
+
+
 
 % For align and more
 \usepackage{amsmath}
@@ -29,8 +39,8 @@
 % For multipage tables
 \usepackage{longtable}
 
-% For including a million figures in a loop (or running code)
-\usepackage{python}
+% Tikz
+\usepackage{pgfplots}
 
 %% Get width of thesis
 %\usepackage{printlen}
@@ -99,7 +109,7 @@
 
 \appendix
 % Import the appendices 
-%\include{appendix1/account_list} 
+\include{appendix1/account_list} 
 %\include{appendix2/tweet_activity} 
 %\include{appendix3/appendix} 
 
