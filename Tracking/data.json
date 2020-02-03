@@ -133,7 +133,7 @@
             "..//Tex/appendix2/tweet_activity.tex": "3706",
             "..//Tex/appendix3/appendix.tex": "6",
             "..//Tex/background/background.tex": "1466",
-            "..//Tex/chapter1/dataandBOW.tex": "995",
+            "..//Tex/chapter1/dataandBOW.tex": "992",
             "..//Tex/chapter2/crossentropy.tex": "570",
             "..//Tex/chapter3/chapter.tex": "9",
             "..//Tex/front/abstract.tex": "11",
@@ -144,7 +144,8 @@
         },
         "times": [
             "14:53:16",
-            "15:55:55"
+            "15:55:55",
+            "19:30:24"
         ],
         "word_counts": {
             "..//Notes/Plan/ThesisPlan.tex": 195,
@@ -161,7 +162,7 @@
             "..//Tex/appendix2/tweet_activity.tex": 3546,
             "..//Tex/appendix3/appendix.tex": 2,
             "..//Tex/background/background.tex": 1342,
-            "..//Tex/chapter1/dataandBOW.tex": 923,
+            "..//Tex/chapter1/dataandBOW.tex": 927,
             "..//Tex/chapter2/crossentropy.tex": 391,
             "..//Tex/chapter3/chapter.tex": 5,
             "..//Tex/front/abstract.tex": 5,
