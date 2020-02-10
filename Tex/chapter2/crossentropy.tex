@@ -4,10 +4,12 @@
 
 We can calculate...
 
+\section{Entropy Rate}
 
+Recall \autoref{def:entropyrate} of the entropy rate of a stochastic process, which while a useful theoretical tool, can be very difficult to compute. 
+\todo{why is it hard to compute}
 
-
-Recall \autoref{eq:entropyrate}, which while a useful theoretical tool, can be very difficult to compute.
+To overcome this, we seek a way to estimate the entropy of the process from a known sequence of data. In 1998 Kontoyianni et al. proved the convergence of a non-parametric entropy estimator in stationary processes~\cite{kontoyiannisNonparametricEntropyEstimation1998}.
 
 
 \begin{definition}[Kontoyianni Entropy Rate]
@@ -22,8 +24,31 @@ Recall \autoref{eq:entropyrate}, which while a useful theoretical tool, can be v
 \end{definition}
 
 
+\todo{Outline of proof of convergence of this estimator}
 
 
+\section{Assumption of Entropy Rate Estimation}
+
+\todo{A discussion and plots of entropy rate convergence}
+
+
+\todo{A comparison with other entropy rates}
+
+
+\section{Cross Entropy Rate}
+
+
+
+\begin{definition}[Cross Entropy Rate]
+	The cross entropy of a {\color{target} target process} $\mathcal{T}$ coded from a {\color{source} source process} $\mathcal{S}$ can be estimated,
+	\begin{equation}
+	\hat{H}(\mathcal{T} || \mathcal{S})=\frac{N_{\mathcal{T}} \log _{2} N_{\mathcal{S}}}{\sum_{i=1}^{N_{\mathcal{T}}} \Lambda_{i}(\mathcal{T}| \mathcal{S})}
+	\end{equation}
+	Where $\Lambda_{i}(\mathcal{T}| \mathcal{S})$ is given by the shortest subsequence starting at position $i$ in {\color{target}target} $\mathcal{T}$ that does not appear as a contiguous subsequence in the {\color{source}source} $\mathcal{S}$.
+	\begin{equation}
+	\Lambda_{i}(\mathcal{T}| \mathcal{S}) = \max \left\{l: T_i^{i+l}=S_{j}^{j+l}, 0 \leq j \leq N_{\mathcal{S}} \leq l \leq \min( N_{\mathcal{S}}- j , N_{\mathcal{T}}- i )\right\}
+	\end{equation}
+\end{definition}
 
 
 % test what suffiently long means in complexity ( plot of complexity vs speed of convegence)
@@ -90,7 +115,7 @@ Recall \autoref{eq:entropyrate}, which while a useful theoretical tool, can be v
 	\end{tikzpicture}
 }
 
-
+\vspace{2in}
 
 old
 
