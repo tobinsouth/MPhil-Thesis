@@ -141,9 +141,12 @@ The Kullback–Leibler divergence has two difficulties; It's not symmetrical and
 \ts{add diagram}
 
 
-\subsubsection{Process Entropy}
+\subsubsection{Entropy Rates}
 
 Entropy rate of a stochastic process describes the amount of information required to describe the future state of a process, conditioned on the information in the history of the process.
+
+"The entropy rate is almost surely an asymptotic lower bound on the per-symbol description length when the process is losslessly encoded" \tocite{Some asymptotic properties of entropy of a
+	stationary ergodic data source with applications to data compression,}
 
 \begin{definition}[Entropy Rate]\label{def:entropyrate}
 	Let  $\mathcal{X}= \{ X_i \}$ be a stochastic ergodic process with a finite alphabet, where $X_i^j$ denotes a subsequence of the process $(X_{i}, X_{i+1}, \ldots, X_{j})$.

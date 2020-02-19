@@ -8,8 +8,8 @@
 % !TeX spellcheck = en_GB
 
 % Any packages should go here
-\usepackage{graphicx,natbib,thesis} 
-
+\usepackage{graphicx,thesis} 
+\usepackage[numbers,square]{natbib}
 
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}       % hyperlinks
 \usepackage{url}            % simple URL typesetting
@@ -43,6 +43,7 @@
 
 % Tikz
 \usepackage{pgfplots}
+
 
 %% Get width of thesis
 %\usepackage{printlen}
@@ -110,7 +111,7 @@
 \include{background/background}
 \include{chapter1/dataandBOW}
 \include{chapter2/crossentropy}
-\include{chapter3/chapter}
+%\include{chapter3/chapter}
 % add as many as you like
 
 \appendix
@@ -124,9 +125,7 @@
 \addcontentsline{toc}{chapter}{Bibliography}
 
 % What style to use and what file to use for the bibliography
-\bibliographystyle{agsm}
-\bibliography{bibliography/thesis}
-\bibliography{bibliography/Data}
-
+\bibliographystyle{abbrvnat}
+\bibliography{bibliography/thesis,bibliography/entropy_rate,bibliography/Data}
 \end{document}
 
