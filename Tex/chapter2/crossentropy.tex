@@ -11,7 +11,7 @@ Recall \autoref{def:entropyrate} of the entropy rate of a stochastic process, wh
 
 To overcome this, we seek a way to estimate the entropy of the process from a known sequence of data. In 1998 Kontoyianni et al. proved the convergence of a non-parametric entropy estimator in stationary processes~\cite{kontoyiannisNonparametricEntropyEstimation1998}.
 
-\begin{definition}[Kontoyianni Entropy Rate]
+\begin{definition}[Kontoyianni Entropy Rate] \label{def:kontoyianni}
 	For a stochastic process $\mathcal{X} = \{X_i\}$, with a realisation of $n$ states and a finite alphabet,  the entropy rate can be estimated using,
 		\begin{equation}\label{eq:estimate}
 	H(\mathcal{X}) \approx\frac{|\mathcal{X}| \log |\mathcal{X}| }{\sum_{i=0}^n \Lambda_{i} },
@@ -124,7 +124,7 @@ Even before it's formalisation by Kontoyianni et al, similar estimators had appe
 
 \section{Cross Entropy Rate}
 
-
+Similar to the extension of entropy to cross entropy in \autoref{def:crossentropy}, we can generalise our notion of Kontoyianni entropy rate in \autoref{def:kontoyianni} to a cross entropy rate.
 
 \begin{definition}[Cross Entropy Rate]
 	The cross entropy of a {\color{target} target process} $\mathcal{T}$ coded from a {\color{source} source process} $\mathcal{S}$ can be estimated,
