@@ -18,11 +18,11 @@
 
 % Colours
 \usepackage{xcolor}
-\definecolor{Left}{RGB}{49,102,158}
-\definecolor{LeanLeft}{RGB}{159,201,235}
-\definecolor{Center}{RGB}{150,103,159}
-\definecolor{LeanRight}{RGB}{202,153,153}
-\definecolor{Right}{RGB}{199,37,46}
+\definecolor{Left}{RGB}{0,0,209}
+\definecolor{LeanLeft}{RGB}{40,40,119}
+\definecolor{Center}{RGB}{164,40,164}
+\definecolor{LeanRight}{RGB}{153,51,51}
+\definecolor{Right}{RGB}{204,0,0}
 
 \colorlet{source}{orange!60!white}
 \colorlet{target}{blue!60!white}
@@ -43,7 +43,7 @@
 
 % Tikz
 \usepackage{pgfplots}
-
+\pgfplotsset{compat=1.16} 
 
 %% Get width of thesis
 %\usepackage{printlen}
@@ -126,6 +126,6 @@
 
 % What style to use and what file to use for the bibliography
 \bibliographystyle{abbrvnat}
-\bibliography{bibliography/thesis,bibliography/entropy_rate,bibliography/Data}
+\bibliography{bibliography/background,bibliography/entropy_rate,bibliography/data_and_bow}
 \end{document}
 

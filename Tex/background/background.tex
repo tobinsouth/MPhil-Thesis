@@ -92,7 +92,7 @@ Although cross entropy has the common notation $H(X, Y)$, in this thesis we will
 We can extend these ideas to explore a notion of distance between probability distributions. Kullback–Leibler divergence is a measure of the inefficiency if one were to assume that a distribution is $p$ when the true distribution is $q$.
 
 \begin{definition}[Kullback–Leibler divergence]
-	Kullback–Leibler divergence (also called relative entropy), $D(p \|q)$,  between two probability distributions $p(x)$ and $q(x)$ is,
+	The Kullback–Leibler divergence (also called relative entropy), $D(p \|q)$,  between two probability distributions $p(x)$ and $q(x)$ is,
 	\begin{align} \label{eq:kldivergence}
 		D(p \| q) &=\sum_{x \in \mathcal{X}} p(x) \log \frac{p(x)}{q(x)} \\ 
 					 &=E_{p} \log \frac{p(X)}{q(X)} 
@@ -168,7 +168,7 @@ While this notion of entropy rate provides a valuable theoretical tool, calculat
 \subsubsection{Predictability}
 
 \todo{reword slightly}
-Predictability is the probability $\pi$ that an theoretical predictive algorithm could predict the next state of a process correctly, this often be difficult to obtain. However, an upper bound, $\pi \leq \pi^{max}(S,N)$, is possible through the use of Fano's inequality~\cite{fanoTransmissionInformationStatistical1961}. For a process with $\pi^{max} = 0.3$, at best we could hope to predict this process correctly 30\% of the time, no matter how good our predicative algorithm~\cite{songLimitsPredictabilityHuman2010}.
+Predictability is the probability $\pi$ that an theoretical predictive algorithm could predict the next state of a process correctly, this often be difficult to obtain. However, an upper bound, $\pi \leq \pi^{max}(S,N)$, is possible through the use of Fano's inequality~\cite{fano_transmission_1961}. For a process with $\pi^{max} = 0.3$, at best we could hope to predict this process correctly 30\% of the time, no matter how good our predicative algorithm~\cite{song_limits_2010}.
 
 
 \todo{change into a definition and proof}
@@ -178,7 +178,7 @@ For a process $X$ with entropy $H(X)$, Fano's inequality in the context of our m
 H(X) = H(\pi^{max}) + (1 – \pi^{max}) \log (|\mathcal{X}| – 1)
 \end{equation}
 \end{definition}
-In order to find $H(\pi^{max})$ we use the binary entropy function~\cite{songLimitsPredictabilityHuman2010}
+In order to find $H(\pi^{max})$ we use the binary entropy function~\cite{song_limits_2010}
 \begin{equation}
 H(\pi^{max}) = -\pi^{max} \log(\pi^{max}) - (1 -  \pi^{max}) \log(1 - \pi^{max})
 \end{equation}
@@ -189,7 +189,7 @@ Which finally gives us a form that can be solved numerically for the fundamental
 
 
 
-Throughout this thesis, maximal predictabilities will found by solving \autoref{eq:predict} using the Powell's conjugate direction method, implemented in python using SciPy~\cite{virtanenSciPyFundamentalAlgorithms2019}, with a starting estimate for the root at $\pi^{max}=0.5$.
+Throughout this thesis, maximal predictabilities will found by solving \autoref{eq:predict} using the Powell's conjugate direction method, implemented in python using SciPy~\cite{virtanen_scipy_2019}, with a starting estimate for the root at $\pi^{max}=0.5$.
 
 
 % cross predictaibility

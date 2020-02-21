@@ -387,5 +387,58 @@
             "..//Tex/front/statement.tex": 202,
             "..//Tex/thesis.tex": 20
         }
+    },
+    "2020-02-21": {
+        "latex_counts": {
+            "..//Notes/Plan/ThesisPlan.tex": "210",
+            "..//Tex/appendix1/account_list.tex": "1502",
+            "..//Tex/appendix1/figs/appendix_accounts.tex": "1772",
+            "..//Tex/appendix1/figs/appendix_accounts_0.tex": "469",
+            "..//Tex/appendix1/figs/appendix_accounts_1.tex": "471",
+            "..//Tex/appendix1/figs/appendix_accounts_2.tex": "469",
+            "..//Tex/appendix1/figs/appendix_accounts_3.tex": "420",
+            "..//Tex/appendix1/figs/removed_accounts.tex": "1372",
+            "..//Tex/appendix1/figs/removed_accounts_0.tex": "516",
+            "..//Tex/appendix1/figs/removed_accounts_1.tex": "508",
+            "..//Tex/appendix1/figs/removed_accounts_2.tex": "384",
+            "..//Tex/appendix2/tweet_activity.tex": "3706",
+            "..//Tex/appendix3/appendix.tex": "6",
+            "..//Tex/background/background.tex": "1503",
+            "..//Tex/chapter1/dataandBOW.tex": "2115",
+            "..//Tex/chapter2/crossentropy.tex": "1437",
+            "..//Tex/chapter3/chapter.tex": "9",
+            "..//Tex/front/abstract.tex": "11",
+            "..//Tex/front/acknowledgements.tex": "6",
+            "..//Tex/front/dedication.tex": "6",
+            "..//Tex/front/statement.tex": "494",
+            "..//Tex/thesis.tex": "210"
+        },
+        "times": [
+            "15:48:27"
+        ],
+        "word_counts": {
+            "..//Notes/Plan/ThesisPlan.tex": 195,
+            "..//Tex/appendix1/account_list.tex": 1308,
+            "..//Tex/appendix1/figs/appendix_accounts.tex": 1612,
+            "..//Tex/appendix1/figs/appendix_accounts_0.tex": 425,
+            "..//Tex/appendix1/figs/appendix_accounts_1.tex": 427,
+            "..//Tex/appendix1/figs/appendix_accounts_2.tex": 425,
+            "..//Tex/appendix1/figs/appendix_accounts_3.tex": 380,
+            "..//Tex/appendix1/figs/removed_accounts.tex": 1260,
+            "..//Tex/appendix1/figs/removed_accounts_0.tex": 472,
+            "..//Tex/appendix1/figs/removed_accounts_1.tex": 464,
+            "..//Tex/appendix1/figs/removed_accounts_2.tex": 352,
+            "..//Tex/appendix2/tweet_activity.tex": 3546,
+            "..//Tex/appendix3/appendix.tex": 2,
+            "..//Tex/background/background.tex": 1379,
+            "..//Tex/chapter1/dataandBOW.tex": 2012,
+            "..//Tex/chapter2/crossentropy.tex": 751,
+            "..//Tex/chapter3/chapter.tex": 5,
+            "..//Tex/front/abstract.tex": 5,
+            "..//Tex/front/acknowledgements.tex": 2,
+            "..//Tex/front/dedication.tex": 2,
+            "..//Tex/front/statement.tex": 202,
+            "..//Tex/thesis.tex": 20
+        }
     }
 }
