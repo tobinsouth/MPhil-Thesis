@@ -160,36 +160,35 @@ Entropy rate of a stochastic process describes the amount of information require
 	\end{equation}
 \end{definition}
 
-While this notion of entropy rate provides a valuable theoretical tool, calculating it for real examples can prove difficult, and often impossible given data. In \todo{chapter two} we will explore a method of estimating a similar quantity.
-
+While this notion of entropy rate provides a valuable theoretical tool, calculating it for real examples can prove difficult, and often impossible given data. In \autoref{ch:crossentropy} we will explore a method of estimating a similar quantity.
 
 
 
 \subsubsection{Predictability}
 
-\todo{reword slightly}
 Predictability is the probability $\pi$ that an theoretical predictive algorithm could predict the next state of a process correctly, this often be difficult to obtain. However, an upper bound, $\pi \leq \pi^{max}(S,N)$, is possible through the use of Fano's inequality~\cite{fano_transmission_1961}. For a process with $\pi^{max} = 0.3$, at best we could hope to predict this process correctly 30\% of the time, no matter how good our predicative algorithm~\cite{song_limits_2010}.
 
 
-\todo{change into a definition and proof}
 \begin{definition}[Maximal Predictability]
 For a process $X$ with entropy $H(X)$, Fano's inequality in the context of our maximal predictability gives,
 \begin{equation}
 H(X) = H(\pi^{max}) + (1 – \pi^{max}) \log (|\mathcal{X}| – 1)
 \end{equation}
 \end{definition}
-In order to find $H(\pi^{max})$ we use the binary entropy function~\cite{song_limits_2010}
+
+The entropy of the maximal predictability $H(\pi^{max})$ is substituted with the binary entropy function~\cite{song_limits_2010},   
 \begin{equation}
-H(\pi^{max}) = -\pi^{max} \log(\pi^{max}) - (1 -  \pi^{max}) \log(1 - \pi^{max})
-\end{equation}
-Which finally gives us a form that can be solved numerically for the fundamental limit of the process' predictability $\pi^{max}$
-\begin{equation}\label{eq:predict}
--H(X)  = \pi^{max} \log(\pi^{max}) + (1 -  \pi^{max}) \log(1 - \pi^{max}) - (1 - \pi^{max}) \log (|\mathcal{X}| - 1)
+H(\pi^{max}) = -\pi^{max} \log(\pi^{max}) - (1 -  \pi^{max}) \log(1 - \pi^{max}).
 \end{equation}
 
+Which finally gives us a form that can be solved numerically for the fundamental limit of the process' predictability, $\pi^{max}$,
+\begin{equation}\label{eq:predict}
+-H(X)  = \pi^{max} \log(\pi^{max}) + (1 -  \pi^{max}) \log(1 - \pi^{max}) - (1 - \pi^{max}) \log (|\mathcal{X}| - 1).
+\end{equation}
 
 
 Throughout this thesis, maximal predictabilities will found by solving \autoref{eq:predict} using the Powell's conjugate direction method, implemented in python using SciPy~\cite{virtanen_scipy_2019}, with a starting estimate for the root at $\pi^{max}=0.5$.
+
 
 
 % cross predictaibility
@@ -200,11 +199,7 @@ We extend this notion of maximal predictability of a process, to create a cross 
 
 \subsection{Networks}
 
-
-
-
-
-
+\todo{go through Newman networks and state a bunch of definitions}
 
 
 
@@ -216,6 +211,8 @@ We extend this notion of maximal predictability of a process, to create a cross 
 
 \subsection{Natural Language Processing}
 
+\ts{introduce in here the notion that we're interested in text and NLP is a fundamental building block of understanding it}
+
 Natural language processing (NLP) is the area of study in which 'natural' human language is examined via machine. Natural language refers to either spoken or written language, designed to be understandable to a human listener or reader. This language is not explicitly designed to be machine understandable, and machine comprehension of this language is a challenging problem \tocite{cite: the challenges of NLP}.
 
 NLP is a broad term covering many models and techniques to computationally extracting meaningful information from text, ranging from the simple extraction of individual words, to the extraction of deeper semantic meaning. 
@@ -225,4 +222,7 @@ Early work in NLP focused around simple grammatical rules and small vocabularies
 These methods face a daunting challenge, language is not only complex and often duplicitous, but contextual and ever-changing. \todo{end better}
 
 \subsubsection{Tokenisation} 
+
+
+
 

@@ -1,7 +1,6 @@
 %!TEX root = ../thesis.tex
 \chapter{The one with cross entropy \label{ch:crossentropy}}
 
-
 We can calculate...
 
 \section{Entropy Rate}
@@ -118,6 +117,66 @@ Even before it's formalisation by Kontoyianni et al, similar estimators had appe
 
 
 \todo{A comparison with other entropy rates}
+
+
+\begin{figure}[hb]
+	\centering
+	\begin{tikzpicture}
+	
+	\node at (-1,0) {(a)};
+	
+	% Time Arrow
+	\node at (0,0) (lefttime) {};
+	\node at (10,0) (righttime) {};
+	\draw [ultra thick, |->] (lefttime) -- (righttime) node[midway, above] {Process} ;
+	
+	\node [above of = lefttime] {2019/01/01};
+	\node [above of = righttime] {2020/01/01};
+	
+	\foreach \x [count=\i] in {0,2,4,6,8}{
+		\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=5pt,mirror,raise=10pt} ] (0.75+\x, 0) -- (1.25+\x,0)
+		node[midway, below, yshift = -20pt] {$W_\i$} ;
+	}
+
+
+	\node at (-1,-2) {(b)};
+	
+	% Time Arrow
+	\node at (0,-2) (lefttime) {};
+	\node at (10,-2) (righttime) {};
+	\draw [ultra thick, |->] (lefttime) -- (righttime) node[midway, above] {Process};
+	
+	\foreach \x [count=\i] in {0,2,4,6,8}{
+		\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=5pt,mirror,raise=10pt} ] (0.25+\x, -2) -- (1.75+\x,-2)
+		node[midway, below, yshift = -20pt] {$W_\i$} ;
+	}
+
+	\node at (-1,-4) {(c)};
+	
+	% Time Arrow
+	\node at (0,-4) (lefttime) {};
+	\node at (10,-4) (righttime) {};
+	\draw [ultra thick, |->] (lefttime) -- (righttime) node[midway, above] {Process};
+	
+	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10 pt} ] (0.25, -4) -- (3.75,-4)
+	node[midway, below, yshift = -20 pt] {$W_1$} ;
+	
+	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=40 pt} ] (1.75, -4) -- (5.25,-4)
+	node[midway, below, yshift = -50 pt] {$W_2$} ;
+	
+	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=70 pt} ] (3.25, -4) -- (6.75,-4)
+	node[midway, below, yshift = -80 pt] {$W_3$} ;
+	
+	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10 pt} ] (4.75, -4) -- (8.25,-4)
+	node[midway, below, yshift = -20 pt] {$W_4$} ;
+	
+	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=40 pt} ] (6.25, -4) -- (9.75,-4)
+	node[midway, below, yshift = -50 pt] {$W_5$} ;
+	
+
+	\end{tikzpicture}
+	\caption{\todo{}}
+\end{figure}
 
 
 
