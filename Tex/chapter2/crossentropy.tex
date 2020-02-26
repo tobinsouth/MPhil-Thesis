@@ -110,6 +110,9 @@ Extending from this notion Kontoyianni et al. showed the convergence of \autoref
 Even before it's formalisation by Kontoyianni et al, similar estimators had appeared in the literature applied to experimental data to determine the entropy rates of processes~\cite{chenUsingDifficultyPrediction1993, chenFastPatternMatching1995, farachEntropyDNAAlgorithms1995, juolaWhatCanWe1997}.
 
 
+% Final note
+Moving forward we will assume any any discussion of the \emph{entropy rate} of a single process is assumed to be the \emph{Kontoyianni entropy rate} of that process, unless otherwise stated.
+
 
 \section{Assumptions of Entropy Rate Estimation}
 
@@ -179,27 +182,71 @@ Even before it's formalisation by Kontoyianni et al, similar estimators had appe
 \end{figure}
 
 
-
-
 \section{Cross Entropy Rate}
 
-Similar to the extension of entropy to cross entropy in \autoref{def:crossentropy}, we can generalise our notion of Kontoyianni entropy rate in \autoref{def:kontoyianni} to a cross entropy rate.
+Similar to the extension of entropy to cross entropy in \autoref{def:crossentropy}, we can generalise our notion of Kontoyianni entropy rate in \autoref{def:kontoyianni} to a \emph{cross} entropy rate which we will call the Kontoyianni cross entropy rate.
 
-\begin{definition}[Cross Entropy Rate]
-	The cross entropy of a {\color{target} target process} $\mathcal{T}$ coded from a {\color{source} source process} $\mathcal{S}$ can be estimated,
+\begin{definition}[Kontoyianni Full Cross Entropy Rate]
+	The cross entropy rate of a {\color{target} target process} $\mathcal{T}$ coded from a {\color{source} source process} $\mathcal{S}$ can be estimated via,
 	\begin{equation}
 	\hat{H}(\mathcal{T} || \mathcal{S})=\frac{N_{\mathcal{T}} \log _{2} N_{\mathcal{S}}}{\sum_{i=1}^{N_{\mathcal{T}}} \Lambda_{i}(\mathcal{T}| \mathcal{S})}
 	\end{equation}
 	Where $\Lambda_{i}(\mathcal{T}| \mathcal{S})$ is given by the shortest subsequence starting at position $i$ in {\color{target}target} $\mathcal{T}$ that does not appear as a contiguous subsequence in the {\color{source}source} $\mathcal{S}$.
 	\begin{equation}
-	\Lambda_{i}(\mathcal{T}| \mathcal{S}) = \max \left\{l: T_i^{i+l}=S_{j}^{j+l}, 0 \leq j \leq N_{\mathcal{S}} \leq l \leq \min( N_{\mathcal{S}}- j , N_{\mathcal{T}}- i )\right\}
+	\Lambda_{i}(\mathcal{T}| \mathcal{S}) = \max \left\{l: T_i^{i+l}=S_{j}^{j+l}, 0 \leq j \leq N_{\mathcal{S}},  0 \leq l \leq \min( N_{\mathcal{S}}- j , N_{\mathcal{T}}- i )\right\},
 	\end{equation}
+	where $T_a^{b}$ and $S_a^b$ are continuous subsequences starting from index $a$ to index $b$ of the {\color{target} target}, $\mathcal{T}$, and  {\color{source} source}, $\mathcal{S}$, processes respectively.
 \end{definition}
+
+This approach is matching segments of text in the {\color{target}target} to segments of text anywhere in the {\color{source}source} in the same manner that the Kontoyianni entropy rate matched segments of text in the future of a process from a index to the history before the index. In essence, the entropy rate was asking how much information was needed on average to describe the future of a source from it's past. Comparatively, the full cross entropy rate above is taking asking how much information was needed on average to describe the {\color{target}target} given knowledge of the entire lifetime of the {\color{source}source}. \ts{Not sure how long I should keep up the colouring for.}
+
+In the context of our problem, this estimator is cheating by viewing the future of news through the lens of the source process. As \todo{ref} illustrates, the text subsequence match in the target could be drawn from future time points in the source. This approach is interesting as it asks a simpler but very relevant question; how different are the two sources from an full information perspective.
+
+\todo{tikz of how the full entropy works}
+
+While this question is interesting, and will be explored further, we need to refine this definition to help answer our question of information flow.
+
+Rather than looking at the entire lifetime of the source during a matching calculations, we can reduce our search space to the text that occurred in the \emph{past} of the source. To achieve this we use an important piece of our data, the time that tweets occurred. For each word in the target process, $T_i$ has an associated time with it, $t(T_i)$. When matching the future of $\mathcal{T}$, starting from an index $i$, we can reduce the source process, $\mathcal{S}$ to only the words that were themselves tweeted before time $t(T_i)$. 
+
+Put simply, we can alter the Kontoyianni full cross entropy rate to a time-synced cross entropy rate by replace the full {\color{source}} process, $\mathcal{S}$, with a time reduce source process $\mathcal{S}_{ \leq t(T_i)}$. This can be seen visually in \todo{ref tikz} and is formally defined as follows.
+
+\begin{definition}[Kontoyianni Time-synced Cross Entropy Rate]
+	The time-synced cross entropy rate of a {\color{target} target process} $\mathcal{T}$ coded from a {\color{source} source process} $\mathcal{S}$ can be estimated via,
+	\begin{equation}
+	\hat{H}(\mathcal{T} || \mathcal{S})=\frac{N_{\mathcal{T}} \log _{2} N_{\mathcal{S}}}{\sum_{i=1}^{N_{\mathcal{T}}} \Lambda_{i}(\mathcal{T}| \mathcal{S}_{\leq t(T_i) } )}
+	\end{equation}
+	Where $\Lambda_{i}(\mathcal{T}| \mathcal{S}_{\leq t(T_i) })$ is given by the shortest subsequence starting at position $i$ in {\color{target}target} $\mathcal{T}$ that does not appear as a contiguous subsequence in the time reduced {\color{source}source} $\mathcal{S}_{\leq t(T_i) }$ where,
+	\begin{equation}
+	\mathcal{S}_{\leq t(T_i) } = \{S_j | t(S_j) \leq t(T_i) \forall i \}.
+	\end{equation}
+	Which gives,
+	\begin{align*}
+	\Lambda_{i}(\mathcal{T}| \mathcal{S}_{\leq t(T_i)}) = \max \{l: T_i^{i+l}=S_{j}^{j+l}, 0 \leq j \leq N_{\mathcal{S}},  \\  0 \leq l \leq \min( N_{\mathcal{S}}- j , N_{\mathcal{T}}- i ) \},
+	\end{align*}
+	where $T_a^{b}$ and $S_a^b$ are continuous subsequences starting from index $a$ to index $b$ of the {\color{target} target}, $\mathcal{T}$ process, and the time reduced {\color{source} source}, $\mathcal{S}_{\leq t(T_i)}$, respectively.
+\end{definition}
+ 
+% Informantion flow idea
+This time-synced entropy rate is testing not just the differences in the language processes of the source and target, but also measuring what information in the target is present in the source's history. This is an important distinction, as it allows us to probe a very important aspect of our data, namely, the time in which news is created. 
+
+If a piece of information appears earlier in the source than in the target, it will be detected during the match length search, resulting in a lower entropy. This is to say, in the context of news, if the {\color{source}source} breaks a story first, \emph{less} information is required to describe the subsequent news output from the {\color{target}target}. 
+
+Conversely, if a {\color{target}target} produces a piece of information before the {\color{source}source}, then that information will not appear in the history of the time-synced source during the match-length search. This will result in lower values of $\Lambda_i$ for that piece of information, which raises the cross entropy rate.
+
+From this, we can find that, on average, if a {\color{source}source} produces information earlier than a {\color{target}target}, the cross entropy rate, $\hat{H}(\mathcal{T} || \mathcal{S})$, will be lower than if the {\color{target}target} produces information earlier than the {\color{source}source}. This method of examining who produces information first can be extended into a notion of \emph{information flow}, a discussion we will leave for \autoref{ch:information_flow}.
+
+
+\todo{tikz of how the time synced entropy works}
+
+\todo{we can extend this with predictability}
+\subsection{Validating the Assumptions Cross Entropy Estimation}
+legth vs cross entropy
 
 
 % test what suffiently long means in complexity ( plot of complexity vs speed of convegence)
 
 
+\subsection{Information Flow}\label{ch:information_flow}
 
 
 %
