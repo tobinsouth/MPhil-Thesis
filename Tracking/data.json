@@ -564,7 +564,7 @@
             "..//Tex/appendix3/appendix.tex": "6",
             "..//Tex/background/background.tex": "1528",
             "..//Tex/chapter1/dataandBOW.tex": "2401",
-            "..//Tex/chapter2/crossentropy.tex": "2514",
+            "..//Tex/chapter2/crossentropy.tex": "2690",
             "..//Tex/chapter3/chapter.tex": "9",
             "..//Tex/front/abstract.tex": "11",
             "..//Tex/front/acknowledgements.tex": "6",
@@ -573,7 +573,8 @@
             "..//Tex/thesis.tex": "211"
         },
         "times": [
-            "10:39:30"
+            "10:39:30",
+            "11:57:56"
         ],
         "word_counts": {
             "..//Notes/Plan/ThesisPlan.tex": 195,
@@ -591,7 +592,7 @@
             "..//Tex/appendix3/appendix.tex": 2,
             "..//Tex/background/background.tex": 1405,
             "..//Tex/chapter1/dataandBOW.tex": 2298,
-            "..//Tex/chapter2/crossentropy.tex": 1732,
+            "..//Tex/chapter2/crossentropy.tex": 1846,
             "..//Tex/chapter3/chapter.tex": 5,
             "..//Tex/front/abstract.tex": 5,
             "..//Tex/front/acknowledgements.tex": 2,
