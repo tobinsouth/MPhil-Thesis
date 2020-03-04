@@ -136,8 +136,8 @@ Moving forward we will assume any any discussion of the \emph{entropy rate} of a
 	\node [above of = lefttime] {2019/01/01};
 	\node [above of = righttime] {2020/01/01};
 	
-	\foreach \x [count=\i] in {0,2,4,6,8}{
-		\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=5pt,mirror,raise=10pt} ] (0.75+\x, 0) -- (1.25+\x,0)
+	\foreach \x [count=\i] in {0,2.125,4.25,6.375,8.5}{
+		\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=5pt,mirror,raise=10pt} ] (0.25+\x, 0) -- (1.25+\x,0)
 		node[midway, below, yshift = -20pt] {$W_\i$} ;
 	}
 
@@ -161,24 +161,32 @@ Moving forward we will assume any any discussion of the \emph{entropy rate} of a
 	\node at (10,-4) (righttime) {};
 	\draw [ultra thick, |->] (lefttime) -- (righttime) node[midway, above] {Process};
 	
-	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10 pt} ] (0.25, -4) -- (3.75,-4)
-	node[midway, below, yshift = -20 pt] {$W_1$} ;
+%	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10 pt} ] (0.25, -4) -- (3.75,-4)
+%	node[midway, below, yshift = -20 pt] {$W_1$} ;
+%	
+%	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=40 pt} ] (1.75, -4) -- (5.25,-4)
+%	node[midway, below, yshift = -50 pt] {$W_2$} ;
+%	
+%	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=70 pt} ] (3.25, -4) -- (6.75,-4)
+%	node[midway, below, yshift = -80 pt] {$W_3$} ;
+%	
+%	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10 pt} ] (4.75, -4) -- (8.25,-4)
+%	node[midway, below, yshift = -20 pt] {$W_4$} ;
+%	
+%	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=20pt,mirror,raise=40 pt} ] (6.25, -4) -- (9.75,-4)	node[midway, below, yshift = -50 pt] {$W_5$} ;
 	
-	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=40 pt} ] (1.75, -4) -- (5.25,-4)
-	node[midway, below, yshift = -50 pt] {$W_2$} ;
-	
-	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=70 pt} ] (3.25, -4) -- (6.75,-4)
-	node[midway, below, yshift = -80 pt] {$W_3$} ;
-	
-	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10 pt} ] (4.75, -4) -- (8.25,-4)
-	node[midway, below, yshift = -20 pt] {$W_4$} ;
-	
-	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=40 pt} ] (6.25, -4) -- (9.75,-4)
-	node[midway, below, yshift = -50 pt] {$W_5$} ;
-	
+	\foreach \x/\i in {0/1,3/3,6/5}{
+	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=25pt,mirror,raise=7pt} ] (0.25+\x, -4) -- (3.5+\x,-4)
+	node[midway, below, yshift = -40pt] {$W_\i$} ;
+}
+
+	\foreach \x/\i  in {1.5/2,4.5/4}{
+	\draw [very thick,  -, draw=gray, decorate, decoration={brace,amplitude=25pt,mirror,raise=9pt} ] (0.25+\x, -4) -- (3.5+\x,-4)
+	node[gray, midway, below, yshift = -40pt] {$W_\i$} ;
+}
 
 	\end{tikzpicture}
-	\caption{\todo{}}
+	\caption{Demonstration on window position in within data. Windows are equispaced along the entire length of data and initially non-overlapping. As the window size increases, shown in (a) $\rightarrow$ (c), the windows remain equispaced but will become overlapping. Window sizes increase until each window is almost entirely overlapping and encompasses the majority of the process. }
 \end{figure}
 
 
