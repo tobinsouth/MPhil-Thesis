@@ -141,7 +141,7 @@ The Kullback–Leibler divergence has two difficulties; It's not symmetrical and
 \ts{add diagram}
 
 
-\subsubsection{Entropy Rates}
+\subsubsection{Entropy Rates}\label{sec:entropyrate}
 
 Entropy rate of a stochastic process describes the amount of information required to describe the future state of a process, conditioned on the information in the history of the process.
 
@@ -162,7 +162,8 @@ Entropy rate of a stochastic process describes the amount of information require
 
 While this notion of entropy rate provides a valuable theoretical tool, calculating it for real examples can prove difficult, and often impossible given data. In \autoref{ch:crossentropy} we will explore a method of estimating a similar quantity.
 
-
+%TODO
+\todo{entropy rate of an i.i.d process proof}\label{proof:iidentroptrate}
 
 \subsubsection{Predictability}
 
@@ -219,8 +220,22 @@ Early work in NLP focused around simple grammatical rules and small vocabularies
 
 These methods face a daunting challenge, language is not only complex and often duplicitous, but contextual and ever-changing. \todo{end better}
 
-\subsubsection{Tokenisation} 
+\subsubsection{Tokenization}\label{sec:tokenization}
+Tokenization is one of the most fundamental building blocks of NLP and can often prove deceptively hard. In simple terms, tokenizing a piece of text is the process of breaking a long sequence of characters into smaller chucks of characters called tokens. In a simple context, this often means breaking a sentence into words, e.g. \texttt{'This thesis is great' } becomes \texttt{['This', 'thesis', 'is',  'great']}.
+
+The task becomes more complex when we introduce contractions. In the case of the text, \texttt{"that's"}, should we introduce a new token to represent the compound, or break it into two new tokens, \texttt{['that', 'is']}? While this may seem trivial, a process of matching segments of text is highly dependent on choices such as these, and the more tokens that are introduced, the larger the vocabulary size.
+
+The vocabulary size is simply the number of unique tokens in any corpus, but can have 
+
+compund words and unknown characters
 
 
+\subsubsection{Text Generation}\label{sec:textgeneration}
 
+drawn from any abritrayr distribution
+
+Zipf law (note that s is between 1 and 2. )
+
+
+drawing from real data
 

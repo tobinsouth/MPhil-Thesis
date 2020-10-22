@@ -1,198 +1,144 @@
 %!TEX root = ../thesis.tex
-\chapter{The one with cross entropy \label{ch:crossentropy}}
+\chapter{Entropy Rate Estimation\label{ch:crossentropy}}
 
-We can calculate...
+Extracting information flows is a problem deeply rooted in information theory. To examine these flows requires tools to quantify and measure this information in the form of natural language. As discussed in \autoref{ch:background}, the words used to construct language have no qualitative meaning in the context of the numerical analysis. This means that the tools are comparative in nature. Indeed, information theory has been used extensively to compare properties of information in language\todo{cite several papers, maybe add a bit more detail here}. 
 
-\section{Entropy Rate}
+In this chapter, we extend this philosophy in two key ways. We introduce a non-parametric entropy rate estimator and check it's assumptions using real data. We then generalise this entropy rate to a cross entropy rate, developing a tool for analysing information flows. 
 
-Recall \autoref{def:entropyrate} of the entropy rate of a stochastic process, which while a useful theoretical tool, can be very difficult to compute. 
-\todo{why is it hard to compute}
+\section{Entropy Rate Estimation}
+
+Recall \autoref{def:entropyrate} of the entropy rate of a stochastic process. While a useful theoretical tool, this can be very difficult to compute, requiring knowledge of the joint entropy for a infinite set of realisations.
 
 To overcome this, we seek a way to estimate the entropy of the process from a known sequence of data. In 1998 Kontoyianni et al. proved the convergence of a non-parametric entropy estimator in stationary processes~\cite{kontoyiannisNonparametricEntropyEstimation1998}.
 
 \begin{definition}[Kontoyianni Entropy Rate] \label{def:kontoyianni}
-	For a stochastic process $\mathcal{X} = \{X_i\}$, with a realisation of $n$ states and a finite alphabet,  the entropy rate can be estimated using,
-		\begin{equation}\label{eq:estimate}
-	H(\mathcal{X}) \approx\frac{|\mathcal{X}| \log |\mathcal{X}| }{\sum_{i=0}^n \Lambda_{i} },
+	For a stochastic process $\mathcal{X} = \{X_i\}$, with $n$ realisations, the entropy rate is given by,
+	\begin{equation}\label{eq:entropy:kontoyiannidef}
+		H(\mathcal{X}) = \lim_{n\to \infty}\frac{n \log n }{\sum_{i=0}^n \Lambda_{i} },
 	\end{equation}
-	where $|\mathcal{X}|$ is the size of the alphabet and $\Lambda_{i}$ is the length of the shortest subsequence starting at position $i$ that does not appear as a contiguous subsequence in the previous $i$ symbols $X_{0}^{i}$. This can also be obtained by adding 1 to the longest match-length, 
-	 \begin{equation}\label{eq:lambda}
+	where  $\Lambda_{i}$ is the length of the shortest subsequence starting at position $i$ that does not appear as a contiguous subsequence in the previous $i$ symbols $X_{0}^{i}$. This can also be obtained by adding 1 to the longest match-length, 
+	 \begin{equation}\label{eq:entropy:lambda}
 	  \Lambda_{i}=1+\max \left\{l: X_{i}^{i+l}=X_{j}^{j+l}, 0 \leq j \leq N-i, 0 \leq l \leq N - i - j \right\}.
 	 \end{equation}
 \end{definition}
 
-
-This idea of using matched subsequences of text draws from the original work by Lempel and Ziv~\cite{zivUniversalAlgorithmSequential1977} in compression algorithms based on coding schemes. These algorithms attempt to compress a sequence down into the smallest possible representation, which at perfect efficiency would be the entropy, $H$. However these universal coding algorithms have no universal rate of convergence \cite{shieldsUniversalRedundancyRates1993, shieldsUniversalRedundancyRates1995} and in practice other approaches are often employed, tailored to the specific application at hand.
+%<lit review>
+This idea of using matched sub-sequences of text draws from the original work by Lempel and Ziv~\cite{zivUniversalAlgorithmSequential1977} in compression algorithms based on coding schemes. These algorithms attempt to compress a sequence down into the smallest possible representation, which at perfect efficiency would be the entropy, $H$. However these universal coding algorithms have no universal rate of convergence~\cite{shieldsUniversalRedundancyRates1993, shieldsUniversalRedundancyRates1995} and in practice other approaches are often employed, tailored to the specific application at hand.
 
 The idea of an entropy estimator based on match lengths was originally put forward by Grassberger~\cite{grassbergerEstimatingInformationContent1989} and proved consistent for independent and identically distributed (i.i.d.) processes and mixing Markov chains~\cite{shieldsEntropyPrefixes1992}, stationary processes~\cite{kontoyiannisPrefixesEntropyRate1994} and more generally to random fields~\cite{quasEntropyEstimatorClass1999}.
 
 
-Wyner and Ziv~\cite{wynerAsymptoticPropertiesEntropy1989} showed that for every ergodic process the match length $\Lambda_{n}$ grows like $\frac{\log{n}}{H}$ in probability. 
+Wyner and Ziv~\cite{wynerAsymptoticPropertiesEntropy1989} showed that for every ergodic process the match length $\Lambda_{n}$ grows like $\frac{\log{n}}{H}$ in probability.  Extending from this notion Kontoyianni et al. showed the convergence of \autoref{eq:entropy:kontoyiannidef} in stationary ergodic processes using the match-length $ \Lambda_{i}$. This match-length in \autoref{eq:entropy:lambda} can be seen as the length of the next phrase to be encoded in the sliding-window Lempel–Ziv algorithm.
 
-Extending from this notion Kontoyianni et al. showed the convergence of \autoref{eq:estimate} in stationary ergodic processes using the match-length $ \Lambda_{i}$. This match-length in \autoref{eq:lambda} can be seen as the length of the next phrase to be encoded in the sliding-window Lempel–Ziv algorithm.
-
-
-\todo{talk more about how this match length works (diagram)}
+%<match lengths>
+Conceptually, this match-length is simple. \autoref{fig:entropy:matchlength} show the calculation of two match-lengths at different time points of a line from Doctor Seuss. At each index $i$, the elements immediately proceeding ($i, i+1, i+2, \dots$) are compared to the history of elements before $i$. The matches of length $k$ are found such that the elements from $j$ to $j+k$ perfectly match the elements from $i$ to $i+k$, for any $j<i$ where $k$ is then maximised. This search only considers the length of the match, regardless of it's location in the history. 
 
 \begin{figure}[hb]
 	\centering
-	\begin{tikzpicture}
-	% TOP ROW
-	
-	\node at (0,0) (a) {``{\color{blue}I do not like} green eggs and ham.};
-	\node [right] at (a.east)  (b) {{\color{blue}I do not like} them, Sam-I-am''};
-	
-	\node [above] at (a.west) (westa){};
-	\node [above] at (a.east) (easta) {};
-	
-	\node [above] at (b.west) (westb){};
-	\node [above] at (b.east) (eastb) {};
-	
-	% Past brace
-	\usetikzlibrary{decorations.pathreplacing}
-	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10pt} ] (westa) -- (easta)
-	node[midway, below, yshift = -20pt] {Past} ;
-	
-	% Future
-	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10pt} ] (westb) -- (eastb)
-	node[midway, below, yshift = -20pt] {Future} ;
-	
-	% Draw i line
-	\draw (westb.north) -- ([yshift=-0.5cm]westb.south) node[below] {$i = 8$};
-	
-	\node [below right of = eastb] {$\Lambda_8 = 5$};
-	
-	% BOTTOM ROW
-	
-	\def\shift{0.8}
-	
-	
-	\usetikzlibrary{positioning}
-	\node [below = 1cm of a] (c) {``I do {\color{blue}not like} green eggs and ham.};
-	\node [right] at (c.east)  (d) {I do {\color{blue}not like} them, Sam-I-am''};
-	
-	% Intermediary nodes
-	\node [right = \shift cm of c.east] (shiftedceast) {};
-	\node [right = \shift cm of d.west] (shifteddwest) {};
-	
-	\node [above] at (c.west) (westc){};
-	\node [above] at (shiftedceast) (eastc) {};
-	
-	\node [above] at (shifteddwest) (westd){};
-	\node [above] at (d.east) (eastd) {};
-	
-	% Past brace
-
-	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10pt} ] (westc) -- (eastc)
-	node[midway, below, yshift = -20pt] {Past} ;
-	
-	% Future
-	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10pt} ] (westd) -- (eastd)
-	node[midway, below, yshift = -20pt] {Future} ;
-	
-	% Draw i line
-	\draw ([yshift=0.11cm]shifteddwest.north) -- ([yshift=-0.4cm]shifteddwest.south) node[below] {$i = 10$};
-	
-	\node [below right of = eastd] {$\Lambda_{10} = 3$};
-	
-	% Time Arrow
-	\node [above = 0.4cm of westa]  (westtime) {};
-	\node [above = 0.4cm of  eastb ](easttime) {};
-	\draw [very thick, ->] (westtime) -- (easttime) node[midway, above] {Process} ;
-	
-	
-	
-	\end{tikzpicture}
-	\caption{An example calculation of the match-length based $\Lambda_i$ applied to a line from Green Eggs and Ham by Doctor Seuss. {\color{blue} Blue text} is that which has been matched from past to the future. }
+	\includestandalone[width=\textwidth]{chapter2/figs/tikz/lambda_count}
+	\caption{An example calculation of the match-length based $\Lambda_i$ applied to a line from Green Eggs and Ham by Doctor Seuss. {\color{blue} Blue text} is that which has been matched from past to the future.\label{fig:entropy:matchlength}} 
 \end{figure}
+%</match lengths>
 
-
-Even before it's formalisation by Kontoyianni et al, similar estimators had appeared in the literature applied to experimental data to determine the entropy rates of processes~\cite{chenUsingDifficultyPrediction1993, chenFastPatternMatching1995, farachEntropyDNAAlgorithms1995, juolaWhatCanWe1997}.
-
+Even before it's formalisation by Kontoyianni et al., similar estimators had appeared in the literature applied to experimental data to determine the entropy rates of processes~\cite{chenUsingDifficultyPrediction1993, chenFastPatternMatching1995, farachEntropyDNAAlgorithms1995, juolaWhatCanWe1997}.
+%</lit review>
 
 % Final note
 Moving forward we will assume any any discussion of the \emph{entropy rate} of a single process is assumed to be the \emph{Kontoyianni entropy rate} of that process, unless otherwise stated.
 
 
+% ASSSUMPTIONS
 \section{Assumptions of Entropy Rate Estimation}
 
-\todo{A discussion and plots of entropy rate convergence}
+The proof of convergence of this entropy rate places some limits on the process of investigation. In particular, three assumptions are made for convergence: ergodicity, stationarity and the Doeblin Condition (DC).
+
+The Doeblin Condition is a reasonably weak condition, but is fundamental in the proof of the convergence. Simply put, the DC requires that after an arbitrary $r$ time steps, every state is possible again with positive probability~\tocite{Konto Prefixes and the entropy rate for long-range sources}. More formally, the definition is as follows.
+
+\begin{definition}[Doeblin Condition (DC)]
+	There exists an integer $r\geq 1$ and a real number $\beta \in(0,1)$  such that,  for all  $x_{0} \in \mathcal{A}, \quad P\left\{X_{0}=x_{0} \mid X_{-\infty}^{-r}\right\} \leq \beta, $ with probability one. 
+\end{definition}
+
+Fortunately, as Kontoyianni et al. themselves state, the DC is ``certainly satisfied by natural languages''~\cite{kontoyiannisNonparametricEntropyEstimation1998}. Given the DC is not a fierce restriction condition is assumption is easy to satisfy. 
+
+In contrast, the assumptions of ergodicity and stationarity are  harder to confirm. A long-standing assumption of information theory is that natural language can be modelled by a stationary process~\tocite{Shannon, A mathematical theory of communication.  Prediction and entropy of printed English, Cover, T.M.; Thomas, J.A. Elements of Information Theory}. The assumption, while flawed, is well precedented and used again in this work.
+
+While the much of the literature including the work of Kontoyianni assume ergodicity of natural language, some suggest that language should be modelled by a \emph{strongly nonergodic} stationary process~\cite{debowski_is_2018}. In brief, this contention is founded upon the idea that any given collection of text, such as a book, has a topic containing a small finite subset of words. Suggesting that it's text will inherently not explore the full state space of language. While well founded, our interest is not to look at the entropy rate of the English language as a whole, but rather to look at the entropy rate of individual text streams, which can explore the state space of news under consideration. As such, the assumptions of ergodicity and stationarity appear justified in the context of the problem.
 
 
-\todo{A  comparison with other entropy rates}
+%<Convergence>
+\subsubsection{Convergence}
+With the assumptions of the proof addressed, the challenges of entropy convergence needs to be examined. The entropy rate defined in \autoref{eq:entropy:kontoyiannidef} is based upon an infinite set of both data to calculated $\Lambda_i$'s over. In reality, we have finite data, and need to examine the convergence of a modified estimator.
 
+\begin{definition}[Kontoyianni Entropy Rate Estimator] \label{def:kontoyianni}
+	The Kontoyianni Entropy Rate in \autoref{def:kontoyianni} can be estimated on a finite stochastic process $\mathcal{X} = \{X_i\}$, with $N$ realisations, by
+	\begin{equation}\label{eq:estimate}
+		\hat{h} = \frac{N \log N }{\sum_{i=0}^n \Lambda_{i} },
+	\end{equation}
+	where  $\Lambda_{i}$ is the length of the shortest subsequence starting at position $i$ that does not appear as a contiguous subsequence in the previous $i$ symbols $X_{0}^{i}$.
+	 \begin{equation}
+	  \Lambda_{i}=1+\max \left\{l: X_{i}^{i+l}=X_{j}^{j+l}, 0 \leq j \leq N-i, 0 \leq l \leq N - i - j \right\}.
+	 \end{equation}
+\end{definition}
 
-\begin{figure}[hb]
-	\centering
-	\begin{tikzpicture}
-	
-	\node at (-1,0) {(a)};
-	
-	% Time Arrow
-	\node at (0,0) (lefttime) {};
-	\node at (10,0) (righttime) {};
-	\draw [ultra thick, |->] (lefttime) -- (righttime) node[midway, above] {Process} ;
-	
-	\node [above of = lefttime] {2019/01/01};
-	\node [above of = righttime] {2020/01/01};
-	
-	\foreach \x [count=\i] in {0,2.125,4.25,6.375,8.5}{
-		\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=5pt,mirror,raise=10pt} ] (0.25+\x, 0) -- (1.25+\x,0)
-		node[midway, below, yshift = -20pt] {$W_\i$} ;
-	}
+To examine the convergence of the estimator, a model of language can be used to generate sequences of text, upon which we can estimate the entropy rate.
 
-
-	\node at (-1,-2) {(b)};
-	
-	% Time Arrow
-	\node at (0,-2) (lefttime) {};
-	\node at (10,-2) (righttime) {};
-	\draw [ultra thick, |->] (lefttime) -- (righttime) node[midway, above] {Process};
-	
-	\foreach \x [count=\i] in {0,2,4,6,8}{
-		\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=5pt,mirror,raise=10pt} ] (0.25+\x, -2) -- (1.75+\x,-2)
-		node[midway, below, yshift = -20pt] {$W_\i$} ;
-	}
-
-	\node at (-1,-4) {(c)};
-	
-	% Time Arrow
-	\node at (0,-4) (lefttime) {};
-	\node at (10,-4) (righttime) {};
-	\draw [ultra thick, |->] (lefttime) -- (righttime) node[midway, above] {Process};
-	
-%	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10 pt} ] (0.25, -4) -- (3.75,-4)
-%	node[midway, below, yshift = -20 pt] {$W_1$} ;
-%	
-%	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=40 pt} ] (1.75, -4) -- (5.25,-4)
-%	node[midway, below, yshift = -50 pt] {$W_2$} ;
-%	
-%	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=70 pt} ] (3.25, -4) -- (6.75,-4)
-%	node[midway, below, yshift = -80 pt] {$W_3$} ;
-%	
-%	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10 pt} ] (4.75, -4) -- (8.25,-4)
-%	node[midway, below, yshift = -20 pt] {$W_4$} ;
-%	
-%	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=20pt,mirror,raise=40 pt} ] (6.25, -4) -- (9.75,-4)	node[midway, below, yshift = -50 pt] {$W_5$} ;
-	
-	\foreach \x/\i in {0/1,3/3,6/5}{
-	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=25pt,mirror,raise=7pt} ] (0.25+\x, -4) -- (3.5+\x,-4)
-	node[midway, below, yshift = -40pt] {$W_\i$} ;
-}
-
-	\foreach \x/\i  in {1.5/2,4.5/4}{
-	\draw [very thick,  -, draw=gray, decorate, decoration={brace,amplitude=25pt,mirror,raise=9pt} ] (0.25+\x, -4) -- (3.5+\x,-4)
-	node[gray, midway, below, yshift = -40pt] {$W_\i$} ;
-}
-
-	\end{tikzpicture}
-	\caption{Demonstration on window position in within data. Windows are equispaced along the entire length of data and initially non-overlapping. As the window size increases, shown in (a) $\rightarrow$ (c), the windows remain equispaced but will become overlapping. Window sizes increase until each window is almost entirely overlapping and encompasses the majority of the process. }
+%<Zipf convergence>
+\begin{figure}[h]
+\centering
+\includegraphics{chapter2/figs/Zipf_entropy_convergence.pdf}
+\caption{Convergence of the Kontoyianni entropy rate estimator on sequences of i.i.d Zipf law realisations with varying Zipf law rates, $s$. \label{fig:entropy:zipfconvergence}}
 \end{figure}
+
+
+\autoref{fig:entropy:zipfconvergence} shows the convergence of the estimator for a set of i.i.d realisations of a Zipf's law distribution. As discussed in \autoref{sec:textgeneration}, Zipf's law is a common tool for generating simple text due to it's similarity to the power-law distributions of vocabulary seen in real corpora. The Zipf's law can be used with a number of exponents, $s$, where larger exponents tighten the distribution, reducing the observed vocabulary size of the sequence and hence the entropy. 
+
+Sequences are generated with 20,000 i.i.d realisations of the Zipf's law and the entropy rate estimated of a process is estimated at each timestep between 1 and 20,000. Estimates of entropy start very low when few realisations are available and rapidly rise as new realisations add complexity. Within the first few hundred timesteps entropies estimates can vary as new realisations are added matching or not-matching previous realisations. This is reflected in the high variance between entropies estimates for Zipf process with the same exponent in these early stages. As the number of timesteps included reaches 5000 to 7500 the bias and variance of the estimate are significantly reduced and begin plateauing.
+
+As more timesteps are added, the estimator continues to converge to the asymptotic entropy and the variance between estimates continues to reduce. High complexity sequences take longer to converge to this entropy, but achieve suitably small levels of bias and variance within 700 timesteps. This is an important finding given the speed of calculating these estimates. The algorithm of calculated the match-lengths needed for estimating the entropy is $O(n^3)$ time complexity. As a result, speed takes a significant hit as the number of timesteps is increases. When performing simulations a parsimonious choice of simulation length is advantageous in allowing multiple simulations to be run. Hence, for Zipf law distributions a simulation length of 10000 is deemed sufficient for convergence to the entropy.
+%</Zipf convergence>
+
+
+%<Zipf real entropy>
+To confirm the validity of this approach, we can examine the known entropy rate of the Zipf processes. As shown in \autoref{proof:iidentroptrate}, the entropy rate of an i.i.d process is simply the entropy of each element. In the case of a Zipf law the distribution has entropy\footnote{
+	Proof: The probability of a word of rank $k$ being selected from a pool of $N$ elements using exponent $s$ is $(k^s H_{N,s})^{-1}$. Hence, the entropy of each individual element is $\sum_{k=1}^N  (k^s N_{N,s})^{-1} \ln\left( (k^s N_{N,s})^{-1} \right)$. Using $H_{N,s} = \sum_{k=1}^N \frac{1}{k^s}$, this can be rearranged to $\frac{s}{H_{N, s}} \sum_{k=1}^{N} \frac{\ln (k)}{k^{s}}+\ln \left(H_{N, s}\right)$. }, 
+\begin{equation}
+	\frac{s}{H_{N, s}} \sum_{k=1}^{N} \frac{\ln (k)}{k^{s}}+\ln \left(H_{N, s}\right)
+\end{equation}
+where $H_{N,s}$ is the Nth generalized harmonic number defined by, $H_{N,s} = \sum_{k=1}^N \frac{1}{k^s}$. Using an exponent of $s=1.5$ and $N$ set to the integer limit of the computer ($2^{31}$), this entropy rate is \emph{3.21755}. However, using $\lim_{N\to \infty} H_{n,s} = \zeta(s)$ and computing $\sum_{n=1}^{\infty} \frac{\log (n)}{n^{1.5}}\approx 3.93224$, we can approximate the asymptotic entropy rate as \emph{3.21811}.
+
+
+
+
+
+
+%</Zipf real entropy>
+
+%<Real data entropy convergence>
+
+
+%</Real data entropy convergence>
+
+
+
+
+
+
+
+
+% \begin{figure}[hb]
+% 	\centering
+% 	\includestandalone[width=\textwidth]{chapter2/figs/tikz/window_size_change}
+% 	\caption{Demonstration on window position in within data. Windows are equispaced along the entire length of data and initially non-overlapping. As the window size increases, shown in (a) $\rightarrow$ (c), the windows remain equispaced but will become overlapping. Window sizes increase until each window is almost entirely overlapping and encompasses the majority of the process. }
+% \end{figure}
 
 
 \section{Cross Entropy Rate}
 
-Similar to the extension of entropy to cross entropy in \autoref{def:crossentropy}, we can generalise our notion of Kontoyianni entropy rate in \autoref{def:kontoyianni} to a \emph{cross} entropy rate which we will call the Kontoyianni cross entropy rate.
+To create a notion of information flow, we need to move beyond looking at individual sources in isolation. 
+
+
+
+Similar to the extension of entropy, $H(X) = \sum_{x \in \mathcal{X}} p(x)\log p(x)=-\mathbb{E}[\log P(X)]$ to cross entropy, $H(p,q) = \sum_{x \in \mathcal{X}} p(x)\log $  in \autoref{def:crossentropy}, we can generalise our notion of Kontoyianni entropy rate in \autoref{def:kontoyianni} to a \emph{cross} entropy rate which we will call the Kontoyianni cross entropy rate.
 
 \begin{definition}[Kontoyianni Full Cross Entropy Rate]
 	The cross entropy rate of a {\color{target} target process} $\mathcal{T}$ coded from a {\color{source} source process} $\mathcal{S}$ can be estimated via,
@@ -212,48 +158,48 @@ In the context of our problem, this estimator is cheating by viewing the future 
 
 \todo{tikz of how the full entropy works}
 
-\begin{figure}
-	\begin{tikzpicture}
+% \begin{figure}
+% 	\begin{tikzpicture}
 
-%% BLUE EVENTS
-% Main
-\draw [thick] (0,0) rectangle (13,1) ;
+% 	%% BLUE EVENTS
+% 	% Main
+% 	\draw [thick] (0,0) rectangle (13,1) ;
 
-% Events
-% Past Events
-\foreach \x in {0, 1, 3, 4.5, 5.5, 7.5, 8, 8.7, 9.5}
-{
-	\fill[blue!40!white] (\x,0) rectangle ++(0.4,1);
-}
-% Future Events
-\foreach \x in {10.2, 11, 12.5}
-{
-	\fill[blue!80!white] (\x,0) rectangle ++(0.4,1);
-}
+% 	% Events
+% 	% Past Events
+% 	\foreach \x in {0, 1, 3, 4.5, 5.5, 7.5, 8, 8.7, 9.5}
+% 	{
+% 		\fill[blue!40!white] (\x,0) rectangle ++(0.4,1);
+% 	}
+% 	% Future Events
+% 	\foreach \x in {10.2, 11, 12.5}
+% 	{
+% 		\fill[blue!80!white] (\x,0) rectangle ++(0.4,1);
+% 	}
 
-% Redraw Main Rectangle
-\draw [thick] (0,0) rectangle (13,1) ;
-
-
-% Time Arrow
-\draw [very thick, ->] (0,2) -- (13,2) node[midway, above] {Time} ;
+% 	% Redraw Main Rectangle
+% 	\draw [thick] (0,0) rectangle (13,1) ;
 
 
+% 	% Time Arrow
+% 	\draw [very thick, ->] (0,2) -- (13,2) node[midway, above] {Time} ;
 
-% Text
-\draw[very thick,  blue] (1.2, 0.5 ) |- (2, -1) node [right] {Tweet: ``{\color{orange} Donald Trump threatens \underline{war} on} Iran''};
-\draw[very thick,  blue] (11.2, 0.5 ) |- (10, -1.7) node [left] {Tweet: ``{\color{orange}Donald Trump threatens \underline{war} on} Syria''};
-\draw[very thick,  blue] (12.7, 0.5 ) |- (10.5, -2.5) node [left] {Tweet: ``World \underline{war} 3 memes are now trending''};
 
-% Now
-\draw [red!60!black, very thick, shorten >= -0.6pt]        (10,-0.2 ) -- (10,1.2) node[above] {Now};
 
-%		% Past brace
-%	\usetikzlibrary{decorations.pathreplacing}
-%	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=4pt} ] (9.8,1) -- (0.2,1)
-%	node[midway, above, yshift = 14pt] {Past} ;
-\end{tikzpicture}
-\end{figure}
+% 	% Text
+% 	\draw[very thick,  blue] (1.2, 0.5 ) |- (2, -1) node [right] {Tweet: ``{\color{orange} Donald Trump threatens \underline{war} on} Iran''};
+% 	\draw[very thick,  blue] (11.2, 0.5 ) |- (10, -1.7) node [left] {Tweet: ``{\color{orange}Donald Trump threatens \underline{war} on} Syria''};
+% 	\draw[very thick,  blue] (12.7, 0.5 ) |- (10.5, -2.5) node [left] {Tweet: ``World \underline{war} 3 memes are now trending''};
+
+% 	% Now
+% 	\draw [red!60!black, very thick, shorten >= -0.6pt]        (10,-0.2 ) -- (10,1.2) node[above] {Now};
+
+% 	%		% Past brace
+% 	%	\usetikzlibrary{decorations.pathreplacing}
+% 	%	\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=4pt} ] (9.8,1) -- (0.2,1)
+% 	%	node[midway, above, yshift = 14pt] {Past} ;
+% 	\end{tikzpicture}
+% \end{figure}
 
 
 While this question is interesting, and will be explored further, we need to refine this definition to help answer our question of information flow.
@@ -300,7 +246,8 @@ legth vs cross entropy
 
 \subsection{A Note on Package Development}
 
-\subsection{Information Flow}\label{ch:information_flow}
+\subsubsection{Hashing Tokens}
+
 
 
 %

@@ -1,0 +1,68 @@
+%!TEX root = ../../../thesis.tex
+\begin{tikzpicture}
+% TOP ROW
+
+\node at (0,0) (a) {``{\color{blue}I do not like} green eggs and ham.};
+\node [right] at (a.east)  (b) {{\color{blue}I do not like} them, Sam-I-am''};
+
+\node [above] at (a.west) (westa){};
+\node [above] at (a.east) (easta) {};
+
+\node [above] at (b.west) (westb){};
+\node [above] at (b.east) (eastb) {};
+
+% Past brace
+\usetikzlibrary{decorations.pathreplacing}
+\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10pt} ] (westa) -- (easta)
+node[midway, below, yshift = -20pt] {Past} ;
+
+% Future
+\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10pt} ] (westb) -- (eastb)
+node[midway, below, yshift = -20pt] {Future} ;
+
+% Draw i line
+\draw (westb.north) -- ([yshift=-0.5cm]westb.south) node[below] {$i = 8$};
+
+\node [below right of = eastb] {$\Lambda_8 = 5$};
+
+% BOTTOM ROW
+
+\def\shift{0.8}
+
+
+\usetikzlibrary{positioning}
+\node [below = 1cm of a] (c) {``I do {\color{blue}not like} green eggs and ham.};
+\node [right] at (c.east)  (d) {I do {\color{blue}not like} them, Sam-I-am''};
+
+% Intermediary nodes
+\node [right = \shift cm of c.east] (shiftedceast) {};
+\node [right = \shift cm of d.west] (shifteddwest) {};
+
+\node [above] at (c.west) (westc){};
+\node [above] at (shiftedceast) (eastc) {};
+
+\node [above] at (shifteddwest) (westd){};
+\node [above] at (d.east) (eastd) {};
+
+% Past brace
+
+\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10pt} ] (westc) -- (eastc)
+node[midway, below, yshift = -20pt] {Past} ;
+
+% Future
+\draw [very thick, -, draw=black, decorate, decoration={brace,amplitude=10pt,mirror,raise=10pt} ] (westd) -- (eastd)
+node[midway, below, yshift = -20pt] {Future} ;
+
+% Draw i line
+\draw ([yshift=0.11cm]shifteddwest.north) -- ([yshift=-0.4cm]shifteddwest.south) node[below] {$i = 10$};
+
+\node [below right of = eastd] {$\Lambda_{10} = 3$};
+
+% Time Arrow
+\node [above = 0.4cm of westa]  (westtime) {};
+\node [above = 0.4cm of  eastb ](easttime) {};
+\draw [very thick, ->] (westtime) -- (easttime) node[midway, above] {Process} ;
+
+
+
+\end{tikzpicture}

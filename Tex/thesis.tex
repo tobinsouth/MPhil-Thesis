@@ -45,6 +45,14 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.16} 
 
+% To load in Tikz Pictures
+\usepackage{standalone}
+
+% For multipage tables
+\usepackage{longtable}
+\usepackage{booktabs}
+
+
 %% Get width of thesis
 %\usepackage{printlen}
 %\printlength\textwidth
@@ -109,14 +117,14 @@
 
 % Import the chapter files
 \include{background/background}
-\include{chapter1/dataandBOW}
+\include{chapter1/data}
 \include{chapter2/crossentropy}
-%\include{chapter3/chapter}
+\include{chapter3/quoter_model}
 % add as many as you like
 
 \appendix
 % Import the appendices 
-%\include{appendix1/account_list} 
+% \include{appendix1/account_list} 
 %\include{appendix2/tweet_activity} 
 %\include{appendix3/appendix} 
 
