@@ -24,12 +24,9 @@
 \definecolor{LeanRight}{RGB}{153,51,51}
 \definecolor{Right}{RGB}{204,0,0}
 
-\colorlet{source}{orange!60!white}
-\colorlet{target}{blue!60!white}
+\colorlet{source}{orange!80!white}
+\colorlet{target}{blue!80!white}
 
-
-% For align and more
-\usepackage{amsmath}
 
 % For subfigures
 \usepackage{subcaption}
@@ -52,13 +49,81 @@
 \usepackage{longtable}
 \usepackage{booktabs}
 
+% For including python code in appendix
+\usepackage{listings}
+\lstloadlanguages{Python}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % deal with bibligraphy error from inputenc
+
+\definecolor{Code}{rgb}{0,0,0} 
+\definecolor{Decorators}{rgb}{0.5,0.5,0.5} 
+\definecolor{Numbers}{rgb}{0.5,0,0} 
+\definecolor{MatchingBrackets}{rgb}{0.25,0.5,0.5} 
+\definecolor{Keywords}{rgb}{0,0,1} 
+\definecolor{self}{rgb}{0,0,0} 
+\definecolor{Strings}{rgb}{0,0.63,0} 
+\definecolor{Comments}{rgb}{0,0.63,1} 
+\definecolor{Backquotes}{rgb}{0,0,0} 
+\definecolor{Classname}{rgb}{0,0,0} 
+\definecolor{FunctionName}{rgb}{0,0,0} 
+\definecolor{Operators}{rgb}{0,0,0} 
+\definecolor{Background}{rgb}{0.98,0.98,0.98} 
+ 
+% \lstdefinelanguage{Python}{ 
+% numbers=left, 
+% numberstyle=\footnotesize, 
+% numbersep=1em, 
+% xleftmargin=1em, 
+% framextopmargin=2em, 
+% framexbottommargin=2em, 
+% showspaces=false, 
+% showtabs=false, 
+% showstringspaces=false, 
+% frame=l, 
+% tabsize=4, 
+% % Basic 
+% basicstyle=\ttfamily\small\setstretch{1}, 
+% backgroundcolor=\color{Background}, 
+% % Comments 
+% commentstyle=\color{Comments}\slshape, 
+% % Strings 
+% stringstyle=\color{Strings}, 
+% morecomment=[s][\color{Strings}]{"""}{"""}, 
+% morecomment=[s][\color{Strings}]{'''}{'''}, 
+% % keywords 
+% morekeywords={import,from,class,def,for,while,if,is,in,elif,else,not,and,or,print,break,continue,return,True,False,None,access,as,,del,except,exec,finally,global,import,lambda,pass,print,raise,try,assert}, 
+% keywordstyle={\color{Keywords}\bfseries}, 
+% % additional keywords 
+% morekeywords={[2]@invariant,pylab,numpy,np,scipy}, 
+% keywordstyle={[2]\color{Decorators}\slshape}, 
+% emph={self}, 
+% emphstyle={\color{self}\slshape}, 
+% % 
+% } 
+
+\lstset{
+  language=Python,
+  basicstyle=\scriptsize\sffamily,
+  numberstyle=\color{gray},
+  stringstyle=\color[HTML]{933797},
+  commentstyle=\color[HTML]{228B22}\sffamily,
+  emph={[2]from,import,pass,return}, emphstyle={[2]\color[HTML]{DD52F0}},
+  emph={[3]range}, emphstyle={[3]\color[HTML]{D17032}},
+  emph={[4]for,in,def}, emphstyle={[4]\color{blue}},
+  showstringspaces=false,
+  breaklines=true,
+  prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+  numbers=left,
+  xleftmargin=15pt
+}
+
 
 %% Get width of thesis
 %\usepackage{printlen}
 %\printlength\textwidth
 
-% For definitions
-\usepackage{amsthm}
+% For definitions & maths
+\usepackage{amsthm,amsmath}
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 
@@ -69,7 +134,6 @@
 \newcommand{\definitionautorefname}{Definition}
 \newcommand{\Theoremautorefname}{Theorem}
 \newcommand{\lemmaautorefname}{Lemma}
-
 
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
@@ -96,20 +160,20 @@
 
 
 \begin{document}
-%\frontmatter
-%
-%\maketitle
-%
-%% Make the following tables
-%\tableofcontents
-%\listoftables
-%\listoffigures
-%
-%% Import the various things
-%\include{front/statement}
-%\include{front/acknowledgements}
-%\include{front/dedication}
-%\include{front/abstract}
+\frontmatter
+
+\maketitle
+
+% Make the following tables
+% \tableofcontents
+% \listoftables
+% \listoffigures
+
+% Import the various things
+% \include{front/statement}
+% \include{front/acknowledgements}
+% \include{front/dedication}
+% \include{front/abstract}
 
 \newpage
 
@@ -126,7 +190,7 @@
 % Import the appendices 
 % \include{appendix1/account_list} 
 %\include{appendix2/tweet_activity} 
-%\include{appendix3/appendix} 
+\include{appendix3/package_code} 
 
 \backmatter
 % Add the bibliography to the table of contents
