@@ -1,5 +1,5 @@
 \documentclass[12pt,a4paper]{book}
-\title{My beautiful dissertation}
+\title{Non-parametric Information Flow Estimation in Social-Media News}
 \author{Tobin South}
 \date{\today}
 \def\degree{Masters of Philosophy}
@@ -11,10 +11,18 @@
 \usepackage{graphicx,thesis} 
 \usepackage[numbers,square]{natbib}
 
+% Hyperref
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}       % hyperlinks
+% Capitalise references
+\renewcommand{\chapterautorefname}{Chapter} 
+\renewcommand{\sectionautorefname}{Section} 
+\renewcommand{\subsectionautorefname}{Subsection} 
+% \setcounter{tocdepth}{3} % Avoids bookmark difference warning
+
+
 \usepackage{url}            % simple URL typesetting
 \usepackage{booktabs}       % professional-quality tables
-\usepackage{amssymb}  % special math fonts
+\usepackage{amssymb}        % special math fonts
 
 % Colours
 \usepackage{xcolor}
@@ -35,19 +43,23 @@
 \usepackage{svg}
 %\usepackage[clean]{svg}
 
-% For multipage tables
-\usepackage{longtable}
-
 % Tikz
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.16} 
+\usepgfplotslibrary{groupplots} % For chapter3 figure
+
 
 % To load in Tikz Pictures
 \usepackage{standalone}
 
 % For multipage tables
-\usepackage{longtable}
-\usepackage{booktabs}
+\usepackage{longtable,booktabs}
+\usepackage{multirow}
+
+% For short quotes to start a chapter
+\usepackage{epigraph}
+\setlength\epigraphwidth{.8\textwidth}
+% \setlength\epigraphrule{0pt}
 
 % For including python code in appendix
 \usepackage{listings}
@@ -68,39 +80,6 @@
 \definecolor{FunctionName}{rgb}{0,0,0} 
 \definecolor{Operators}{rgb}{0,0,0} 
 \definecolor{Background}{rgb}{0.98,0.98,0.98} 
- 
-% \lstdefinelanguage{Python}{ 
-% numbers=left, 
-% numberstyle=\footnotesize, 
-% numbersep=1em, 
-% xleftmargin=1em, 
-% framextopmargin=2em, 
-% framexbottommargin=2em, 
-% showspaces=false, 
-% showtabs=false, 
-% showstringspaces=false, 
-% frame=l, 
-% tabsize=4, 
-% % Basic 
-% basicstyle=\ttfamily\small\setstretch{1}, 
-% backgroundcolor=\color{Background}, 
-% % Comments 
-% commentstyle=\color{Comments}\slshape, 
-% % Strings 
-% stringstyle=\color{Strings}, 
-% morecomment=[s][\color{Strings}]{"""}{"""}, 
-% morecomment=[s][\color{Strings}]{'''}{'''}, 
-% % keywords 
-% morekeywords={import,from,class,def,for,while,if,is,in,elif,else,not,and,or,print,break,continue,return,True,False,None,access,as,,del,except,exec,finally,global,import,lambda,pass,print,raise,try,assert}, 
-% keywordstyle={\color{Keywords}\bfseries}, 
-% % additional keywords 
-% morekeywords={[2]@invariant,pylab,numpy,np,scipy}, 
-% keywordstyle={[2]\color{Decorators}\slshape}, 
-% emph={self}, 
-% emphstyle={\color{self}\slshape}, 
-% % 
-% } 
-
 \lstset{
   language=Python,
   basicstyle=\scriptsize\sffamily,
@@ -156,7 +135,7 @@
 \newcommand{\lm}[1]{{\color{orange}[[LM: {#1}]]}}
 \newcommand{\mr}[1]{{\color{blue}{MR: {#1}}}}
 \newcommand{\ts}[1]{{\color{purple}[[TS: {#1}]]}}
-\newcommand{\tocite}[1]{{\color{red}[[CITE: {#1}]]}}
+\newcommand{\tocite}[1]{{\color{red}[[CITE]]}}
 
 
 \begin{document}
@@ -165,32 +144,35 @@
 \maketitle
 
 % Make the following tables
-% \tableofcontents
-% \listoftables
-% \listoffigures
-
-% Import the various things
-% \include{front/statement}
+\tableofcontents
+\listoftables
+\listoffigures
+% 
+% % Import the various things
+\include{front/statement}
 % \include{front/acknowledgements}
 % \include{front/dedication}
-% \include{front/abstract}
+\include{front/abstract}
 
 \newpage
 
 \mainmatter
 
 % Import the chapter files
-\include{background/background}
+\include{other_sections/introduction}
+\include{other_sections/background}
 \include{chapter1/data}
 \include{chapter2/crossentropy}
 \include{chapter3/quoter_model}
-% add as many as you like
+\include{chapter4/ranking}
+\include{other_sections/conclusion}
 
 \appendix
 % Import the appendices 
-% \include{appendix1/account_list} 
-%\include{appendix2/tweet_activity} 
+\include{appendix1/account_list} 
+\include{appendix2/tweet_activity} 
 \include{appendix3/package_code} 
+\include{appendix4/rankings_app} 
 
 \backmatter
 % Add the bibliography to the table of contents
@@ -198,6 +180,6 @@
 
 % What style to use and what file to use for the bibliography
 \bibliographystyle{abbrvnat}
-\bibliography{bibliography/background,bibliography/entropy_rate,bibliography/data_and_bow}
+\bibliography{bibliography/background,bibliography/entropy_rate,bibliography/data_and_bow,bibliography/quoter,bibliography/rank,bibliography/intro}
 \end{document}
 

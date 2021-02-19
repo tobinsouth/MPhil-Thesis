@@ -1,13 +1,13 @@
 %!TEX root = ../thesis.tex
-\chapter{Data Collection and Cleaning}
+\chapter{Data Collection and Cleaning}\label{ch:data}
 
 
-In order to analyse information flow in news, we first need a dataset that contains it. This dataset needs to be comprehensive, containing most popular news sources; textual, as methods developed in this work are based on text data; and relevant, as the analysis of news should happen where people actually consume it.
+In order to analyse information flow in news, we first need a dataset that is: comprehensive, containing most popular news sources; textual, as methods developed in this work are based on text data; and relevant, as the analysis of news should happen where people actually consume it.
 
-In the 1950s, this source would be household television. The widespread popularity of which allowed TV broadcasting to become the primary tool for influencing public opinion in developed nations~\cite{diggs-brown_strategic_2011}. 
+In the 1950s, this source would be household television, the widespread popularity of which allowed TV broadcasting to become the primary tool for influencing public opinion in developed nations~\cite{abramson_electronic_1990}. 
 % This was a shift from a population that \emph{listened} to radio news, to a population that \emph{watched} news. 
 % The even more rapid rise of mobile internet and social media sites in the last two decades has caused another shift.
-The rise of mobile internet and social media sites in the last two decades has reshaped this paradigm. No longer a population that watch news at fixed times, or read regularly scheduled newspapers; the conveniences of the modern developed world allow individuals to consume news any time, anywhere. As of 2019, 55\% of US adults get their news from social media either `often' or `sometimes'~ and 88\% state that `social media companies have at least some control over the mix of news people see'~\cite{shearer_americans_2019}.
+The rise of the internet and social media sites in the last two decades has reshaped this paradigm. Moving beyond regularly scheduled television news and structured newspapers, the conveniences of the modern developed world allow individuals to consume news any time, anywhere. As of 2019, 55\% of US adults get their news from social media either `often' or `sometimes'~ and 88\% state that `social media companies have at least some control over the mix of news people see'~\cite{shearer_americans_2019}.
 
 Given the importance of a free press and the role of social media sites in the delivery of news, this work aims to study the news on social media. To begin this task, we first define some common terms for clarity.
 
@@ -31,17 +31,17 @@ Given the importance of a free press and the role of social media sites in the d
 \section{Data}
 
 % <allsides disscussion>
-Using the media analysis source AllSides\footnote{www.allsides.com}, a collection of news-media organisations was found. The purpose of AllSides is to provide an open  analysis of political leanings of news sources~\cite{gable_media_2019}, and to aggregate news allowing consumers to view articles from different sides of the political spectrum. Each news source is labelled into one of 5 categories, {\color{Left}Left},
+Using the media analysis source AllSides\footnote{www.allsides.com}, a collection of news-media organisations was found. The purpose of AllSides is to provide an open  analysis of political leanings of news sources~\cite{gable_media_2019}, and to aggregate news allowing consumers to view articles from different sides of the political spectrum. Each news source is labelled into one of 5 categories; {\color{Left}Left},
 {\color{LeanLeft}Lean Left},
 {\color{Center}Center},
 {\color{LeanRight}Lean Right}, or
 {\color{Right}Right}.
 For each news source the ratings are determined internally using `blind surveys of people across the political spectrum, multi-partisan analysis, editorial reviews, third party data, and tens of thousands of user feedback ratings'~\cite{gable_media_2019}. News sources are only assigned to a single category, but do have an attached confidence rating that is provided from users selecting if they agree or disagree with the rating. An example of the ratings can be seen in \autoref{fig:allsidesmediabiaschart}.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=\linewidth]{chapter1/figs/AllSidesMediaBiasChart}
-	\caption{An example collection of News-Media sites that have been classified into biases; sourced from Allsides website~\cite{gable_media_2019}}
+	\caption{An example collection of News-Media sites that have been classified into biases; sourced from Allsides website~\cite{gable_media_2019}.}
 	\label{fig:allsidesmediabiaschart}
 \end{figure}
 % </allsides disscussion>
@@ -49,38 +49,40 @@ For each news source the ratings are determined internally using `blind surveys 
 
 
 % <sorting organisations>
-From the website, a list of possible news sources was collected on February 1st, 2019. In this collection was organisation names, political bias', the number of user feedback ratings of the political bias, and, if available, the twitter handles associated with those sources. These collected news sources were broad, containing not just news-media organisations but authors, pundits and think tanks. 
+From the website, a list of possible news sources was collected on February 1st, 2019. In this collection was organisation names, political bias', the number of user feedback ratings of the political bias, and, if available, the Twitter handles associated with those sources. These collected news sources were broad, containing not just news-media organisations but authors, pundits and think tanks. 
 
-To select an appropriate set of news-media organisations, an examination and filtering process was undertaken. A source was only considered if it was a organisation (not an individual), that produced news content of a diverse range of topics. Many news sources were connected to think tanks or opinion groups, and only created news of a single topic or campaign. Further, if an news-media organisation has no twitter account or had less than 10,000 followers (a low bar in the social media world), then it was removed from the pool. This mainly removed inactive organisations and news organisation from very small rural towns. 
-Finally, a single source was removed as it was not in English, and a single source was removed as it was the smaller sister site that had all content as a subset of it's larger site.  The result of this filtering process is 170 news-media organisations with associated Twitter accounts and categorised political bias'.  A list of all news-media organisations under analysis can be seen in \autoref{sec:app_accounts} and all removed sources and the removal justification can be seen in \autoref{appendix:tab:removed_accounts_0}.
+To select an appropriate set of news-media organisations, an examination and filtering process was undertaken. A source was only considered if it was a organisation (not an individual), that produced news content of a diverse range of topics. Many news sources were connected to think tanks or opinion groups, and only created news of a single topic or campaign. Further, if a news-media organisation has no Twitter account or had less than 10,000 followers, then it was removed from the pool. This mainly removed inactive organisations and news organisation from very small rural towns. 
+Finally, a single source was removed as it was not in English (\emph{@univision}), and a single source (\emph{@theMRC}) was removed as its content was a subset of it's sister site, CNSNews.  The result of this filtering process is 170 news-media organisations with associated Twitter accounts and categorised political bias'.  A list of all news-media organisations under analysis can be seen in \autoref{sec:app_accounts} and all removed sources and the removal justification can be seen in \autoref{tab:app_removed_accounts}.
 % </sorting organisations>
 
 \subsubsection{Collection}
-%  <twitter collection>
-Using the Twitter user handles associated with each of the news-media organisations, the history of all tweets for each account was collected using the Twitter application programming interface (API)\footnote{\url{https://developer.twitter.com/en/docs}} and web-scraping tools\footnote{\url{https://github.com/twintproject/twint}}. Of interest in this work are the tweets each news organisation tweeted between January 1st, 2019 to January 1st, 2020. 
+%  <Twitter collection>
+Using the Twitter user handles associated with each news-media organisation, the history of all tweets for each account was collected using the Twitter application programming interface (API)\footnote{\url{https://developer.Twitter.com/en/docs}} and web-scraping tools\footnote{\url{https://github.com/twintproject/twint}}. Of interest in this work are the tweets each news organisation made between January 1st, 2019 to January 1st, 2020, which is the largest practical time-frame possible for analysis during this research project given data collect constraints. 
 
-Each major news-media organisation will tweet pieces of news multiple times throughout the day. The manner in which each organisation does this can differ and no standard format is used. The tweets often come in the form of single line description of articles, alongside a link to an article on the news-media organisation's website. The primary purpose of using social media sites to post these stories is to drive traffic to the organisation's website, wherein they can earn revenue from ad impressions. As such, the format of such news tweets is to extract core concepts from articles and frame them in their most essential and appealing way; in essence, they are trying to create so-called `click-bait'~\cite{potthast_crowdsourcing_2018}. This format is desirable for our work as we want to explore how the language we use in news to appeal to consumers differs between organisations. This simplified format presents a reduced essence of this notion.
+Over this period major news-media organisations tweeted pieces of news multiple times throughout the day. The manner in which each organisation does this can differ and no standard format is used. The tweets often come in the form of a single line description of articles, alongside a link to the article on the news-media organisation's website. The primary purpose of using social media sites to post these stories is to drive traffic to the organisation's website, wherein they can earn revenue from ad impressions. As such, the format of such news tweets is to extract core concepts from articles and frame them in their most essential and appealing way; often they are trying to create so-called `click-bait'~\cite{potthastCrowdsourcingLargeCorpus2018} but even standard reporting is often reformatted to a clear tweet length summary. This format is desirable for our work as we want to explore how the language news-media organisations use to appeal to consumers differs between organisations.
 
 % breaking news
-Twitter also serves another purpose for news-media organisations; as a tool for breaking news. The modern 24 hour news cycle has had many effects on journalism, but chief among them is the need to produce breaking news at a lightning fast pace. The use of social media as a near instant tool for global public communication means that often no time can be wasted in publishing knowledge of a story, often while it is unfolding. Indeed, research has explored the role of Twitter for breaking news in the cases of the 2011 UK summer riots~\cite{vis_twitter_2013}, through activity providing real time updates over the four days, and in the case of the death of Osama Bin Laden in 2011~\cite{hu_breaking_2012}, where the news was leaked and spread virally through social media before any news-media organisations could fully verify and publish stories on the claim. %
+Twitter also serves as a tool for breaking news. The modern 24 hour news cycle has had many effects on journalism, including a pressure to produce breaking news at a lightning fast pace. The use of social media as a near instant tool for global public communication means that often no time is wasted in publishing a story, potentially while it is unfolding. Indeed, research has explored the role of Twitter for breaking news in the cases of the 2011 UK summer riots~\cite{vis_Twitter_2013}, through activity providing real time updates over the four days, and in the case of the death of Osama Bin Laden in 2011~\cite{hu_breaking_2012}, where the news was leaked and spread virally through social media before any news-media organisations could fully verify and publish stories on the claim. %
+This rapid information exchange can prove dangerous, as in the case of the 2013 Boston Marathon bombing~\cite{starbird_rumors_2014}, in which that 29\% of the most viral content on Twitter was rumors and fake content~\cite{gupta_100_2013}.
+% boston marathon
 % These breaking news stories are sometimes, but not always, preceded by expressions such as ``\emph{Breaking News:}''. The inconsistent use of such a preamble can present challenge in our analysis of language moving forward, an \todo{will be explored more in this section}.
-%  </twitter collection>
+%  </Twitter collection>
 
 \subsubsection{Account Removal}
-% <removal of inactive twitter accounts>
-Using this collection method a total of 3,221,769 tweets were collected from the 170 news-media organisation official Twitter accounts in the 2019 calendar year. This represents an average number of tweets per day of above 50 tweets for each news organisation. In total, this appears a large useful corpus of text data for analysis. However, the activity level and consistency of output variety greatly between organisations. As can be seen in \autoref{fig:data_cleaning_average_tweet_activity}, some news organisations produce very little content on average. This can be explained through two mechanisms.
+% <removal of inactive Twitter accounts>
+Using this collection method a total of 3,221,769 tweets were collected from the 170 news-media organisation official Twitter accounts in the 2019 calendar year. This represents an average number of tweets per day of above 50 tweets for each news organisation. However, the activity level and consistency of output variety greatly between organisations. \autoref{fig:data_cleaning_average_tweet_activity} shows the distribution of average daily number of tweets for each news-media organisations, showing that some news organisations produce very little content on average. This can be explained through two mechanisms.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics{chapter1/figs/averagetweetactivity}
-	\caption{The average number of tweets produced each day during the 2019 calendar year for all 171 news-media organisations. The red line is the chosen threshold of 1000 tweets in the year, an average of 2.74 tweets per day. \todo{Change y-axis label to `Number of news-media organisations'.}}
+	\caption{The average number of tweets produced each day during the 2019 calendar year for all 170 news-media organisations. The red line is the chosen threshold of 1000 tweets in the year, an average of 2.74 tweets per day.}
 	\label{fig:data_cleaning_average_tweet_activity}
 \end{figure}
 
-Firstly, some organisations are not very active on social media. In particular, smaller organisations, which are typically less well resourced, place a lower priority on social media posting. This lowered tweet volume, presents a challenge for this work. In particular the use of the non-parametric entropy estimator in \autoref{ch:crossentropy} require a substantial amount of text to reach meaningful results. As such, organisations that produced less that 1000 tweets in 2019 were removed from further consideration. This removed a total of 11 news-media organisations, listed in  \autoref{tab:data_removed_low_tweet_counts}.
+Firstly, some organisations are not very active on social media. In particular, smaller organisations, which are typically less well resourced, place a lower priority on social media posting. This lowered tweet volume, presents a challenge for this work. In particular the use of the non-parametric entropy estimator in \autoref{ch:crossentropy} require a substantial amount of text to converge. As such, organisations that produced less that 1000 tweets in 2019 were removed from further consideration. This removed a total of 11 news-media organisations, listed in  \autoref{tab:data_removed_low_tweet_counts}.
 
 
-\begin{table}[h!]
+\begin{table}[!htbp]
 	\centering
 	\begin{tabular}{llr}
 		\toprule
@@ -103,9 +105,10 @@ Firstly, some organisations are not very active on social media. In particular, 
 \label{tab:data_removed_low_tweet_counts}
 \end{table}
 
-Secondly, an issue was identified with long periods of inactivity of a few organisations. Five news-media organisations, for reasons unknown, had large periods of time in which they did not post any tweets. These periods of time spanning a few months present key issues to our investigation. Moving forward we will consider time an important aspect of news, especially in the context of breaking news, and as such these organisations are not only at a disadvantage in this space, but present an anomaly in our data that hinders our ability to extract meaningful results from them. These five organisations, listed in \autoref{tab:data_removed_inactive_period} were removed from further consideration and analysis.
+Secondly, five news-media organisations, for reasons unknown, had large periods of time in which they did not post any tweets. These periods of time spanning a few months present key challenges to our investigation. 
+Time is an important aspect of news, especially in the context of news, and this aspect is incorporated into our entropy estimation tools in \autoref{ch:crossentropy}. As such, news organisations that take long breaks will not have fair information theoretic comparisons. These five organisations, listed in \autoref{tab:data_removed_inactive_period} were removed from further consideration and analysis.
 
-\begin{table}[h!]
+\begin{table}[!htbp]
 	\centering
 	\begin{tabular}{ll}
 		\toprule
@@ -123,27 +126,27 @@ Secondly, an issue was identified with long periods of inactivity of a few organ
 \end{table}
 
 
-To further confirm the validity of the sources in terms of their activity level over time, we examine the isolated daily activity of each news-media organisation. An activity curve for the New York Times can be seen in \autoref{fig:data_newyorktime_activity}. 
-A clear weekly trend, wherein tweet activity is decreased, but not zero, during the weekends can bee seen in the New York Time activity, but is emblematic of a general trend seen in most news-media organisation. Further, many news-media organisations have distinct spikes that occur a key points during the year. These spikes indicate an extreme news day, wherein an organisation is covering a rapidly evolving breaking news story, or responding to major changes in discourse through the day. These are interesting and important features in the data, an worth keeping in mind during further analysis. The full collection of figures containing the daily activity levels of all included organisations can be seen in \autoref{app:activity}.
+We examined the daily activity of each news-media organisation. An activity curve for the \emph{New York Times} can be seen in \autoref{fig:data_newyorktime_activity}. 
+A clear weekly trend, wherein tweet activity is decreased, but not zero, during the weekends is seen in most news-media organisations. Further, many news-media organisations have distinct spikes at key points during the year. These spikes indicate an organisation is covering a rapidly evolving breaking news story, or responding to major changes in discourse through the day. These are interesting and important features in the data; the full collection of figures containing the daily activity levels of all included organisations can be seen in \autoref{app:activity}.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
 \centering
-	\includegraphics{appendix2/figs/tweet_times/nytimes.pdf}
+	\includegraphics{chapter1/figs/tweet_times_nytimes.pdf}
 	\caption{Twitter activity over 2019 for `The New York Times'.
-		Twitter handle is `nytimes' with 44800317 followers and 31029 total tweets in 2019. A reference value of 5 tweets per day is shown in red. This is only one news-media organisation and all other activity figures for other organisations are available in \autoref{app:activity}, \todo{Change y-axis to number of tweets per day}}
+		Twitter handle is `nytimes' with 44800317 followers and 31029 total tweets in 2019. This is only one news-media organisation and all other activity figures for other organisations are available in \autoref{app:activity}.}
 	\label{fig:data_newyorktime_activity}
 \end{figure}
 
-With this activity-level cleaned data, our news-media organisations have a slightly higher average number of tweets per day of 52.97. With the total number of remaining tweets at 2,977,980.
-% </removal of inactive twitter accounts>
+% </removal of inactive Twitter accounts>
 
 \subsubsection{Account Analysis}
 % <metadata>
-As a result of this filtering we are left with 154 news-media organisations with complete data for the 2019 calendar year. %
+After filtering we are left with 154 news-media organisations with complete data for the 2019 calendar year. %
+These organisations average 52.97 tweets per day, with a total of 2,977,980 tweets.
 % Of these organisations the bias distribution is still somewhat representative of social media. \ts{find a source that discusses why left wing is more popular on social media.} 
-In total there are 73 organisations in the left half of the bias spectrum, 44 in the centre and 37 on the right; expanded on in \autoref{fig:data_number_of_bias_organisations}. This distribution, although shifted towards the left, still provides ample sources for the effect of bias to be explored further in this work, with keen attention to the potential impact of the skewed distribution. 
+There are 73 organisations in the left half of the bias spectrum, 44 in the centre and 37 on the right (\autoref{fig:data_number_of_bias_organisations}). This distribution, although shifted towards the left, still provides sufficient samples of bias to explore further.
 
-\begin{table}[h!]
+\begin{table}[!htbp]
 	\centering
 	\begin{tabular}{lr}
 		\toprule
@@ -160,13 +163,13 @@ In total there are 73 organisations in the left half of the bias spectrum, 44 in
 	\label{fig:data_number_of_bias_organisations}
 \end{table}
 
-From the news-media Twitter accounts we can also access metadata about the organisation. Two useful such pieces of metadata are the geographic location, and the number of followers on twitter.
+The news-media Twitter accounts also provide metadata about each organisation. Two useful pieces of metadata are the geographic location, and the number of followers on Twitter.
 
 % location data
-On the Twitter account of each news-media organisation they can elect to provide a text-based `location'. In some cases this option can be used for other purposes, such for self promotion (e.g. the \emph{New York Daily} states it's location as `\texttt{New York City  /  fb.com/nydailynews}') and many organisations have elected to leave the field blank. 
-Of the organisation with text, these can be difficult to disambiguate and compare. Due to this complexity of possible locations, these classifications were done manually and are summarised in \autoref{tab:data_locations}. In situations were multiple cities or locations are defined, the largest possible inclusion was taken. For example `\texttt{New York and the World}' would become `Worldwide' in our classification, as would `\texttt{NYC, London, Paris, Hong Kong}'. There is a notable U.S focus to the data, as is expected using a U.S. based bias rating tool.
+The Twitter account of each news-media organisation can elect to provide a free text `location'. In some cases this option can be used for other purposes, such for self promotion (e.g. the \emph{New York Daily} states it's location as `\texttt{New York City  /  fb.com/nydailynews}') and many organisations elected to leave the field blank. 
+Of the organisations with text, locations can be difficult to disambiguate and compare. We therefore classified locations manually in \autoref{tab:data_locations}. Where multiple cities or locations are given, the largest possible inclusion was taken. For example `\texttt{New York and the World}' would become `Worldwide' in our classification, as would `\texttt{NYC, London, Paris, Hong Kong}'. There is a notable U.S focus to the data, as is expected using a U.S. based bias rating tool.
 
-\begin{table}[h!]
+\begin{table}[!htbp]
 	\centering
 	\begin{tabular}{lr}
 		\toprule
@@ -190,11 +193,11 @@ Of the organisation with text, these can be difficult to disambiguate and compar
 \end{table}
 
 % follower distributions
-The number of followers a news-media organisation has on Twitter is an important metric, as it underpins the default mechanism through which people consume the news content produced. Although other algorithm news-feed behaviours provide an important effect, the follower count plays a role in such a feed and is an effective metric of `success' in the eyes of the news-media organisations.
+The number of followers a news-media organisation has on Twitter is an important metric, as it summarises the 'reach' of the account.
 
-The most followed organisation in the data is \emph{The New York Times} with 44,800,317 accounts following it at the time of collection on the 13th January 2020. The least followed account included in the data is \emph{CalMatters} with 15,069 followers. Interestingly, the follower counts are slightly higher for left biased organisations than for the right, in addition to being more numerous. This is shown via the followers distributions for each bias in \autoref{fig:data_number_of_follow_by_bias_raincloud}, which is indicative of the larger trend in social media of slightly left leaning demographics~\cite{mellon_twitter_2017}.
+The most followed organisation in the data was the \emph{New York Times} with 44,800,317 accounts following it at the time of collection on the 13th January 2020. The least-followed account was \emph{CalMatters} with 15,069 followers. Interestingly, the follower counts were slightly higher for left biased organisations than for the right, in addition to being more numerous. This is shown via the followers distributions for each bias in \autoref{fig:data_number_of_follow_by_bias_raincloud}, which is indicative of the larger trend in social media of slightly left-leaning demographics~\cite{mellonTwitterFacebookAre2017}.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=\textwidth]{chapter1/figs/number_of_follow_by_bias_raincloud}
 	\caption{Number of followers on Twitter of news-media organisations included in the data. Grouping is according to Allsides bias.}
@@ -204,38 +207,51 @@ The most followed organisation in the data is \emph{The New York Times} with 44,
 
 \subsection{Tokenization}
 
-With the 2,977,980 tweets from the remaining accounts, we process each tweet into an array of words. As discussed in \autoref{sec:tokenization}, the process of tokenization is applied to each string independently.
+We process the 2,977,980 tweets from filtered dataset into an array of words. As discussed in \autoref{sec:tokenization}, the process of tokenization is applied to each string independently.
 
-To perform the tokenization, the TweetTokenizer\footnote{\url{www.nltk.org/api/nltk.tokenize}} from the Natural Language Toolkit (nltk) in Python is used. This built-in tokenizer is specially designed for tweet-style strings and bundles several useful features.
+The TweetTokenizer\footnote{\url{www.nltk.org/api/nltk.tokenize}} from the Natural Language Toolkit (nltk) in Python is used. This built-in tokenizer is specially designed for tweet-style strings and bundles several useful features.
 
 For each tweet, four steps are applied:
 \begin{enumerate}
-	\item Twitter account handles, which appear in the form `@account\_name', are removed. 
-	\item Any sequence of a character that repeats more than three times is reduced to a maximum of 3. This has the effect of standardising text of similar meanings a common form, such as `waaaaayyyy' and `waaayyyyy' to `waaayyy'.
-	\item All URLs included in the text are removed.  
-	\item The string is converted to lower-case and split at each white-space, giving an array of individual words.
+	\item Twitter account handles, which appear in the form `@account\_name', are removed. Across all accounts, these handles make up 0.88\% of the tokens. While some handles are contextual references, many are reference to piece authors. In the case of \emph{latimes}, 69\% of the references were to it's own Twitter account. In general, these handles usually add uninformative differentiation between each organisations description of the news, and make matching sub-sequences of tokens harder.
+	\item Any sequence of a character that repeats more than three times is reduced to a maximum of 3. This has the effect of standardising text of similar meanings a common form, such as `waaaaayyyy' and `waaayyyyy' to `waaayyy'. In doing so, this reducing makes matches between these tokens far more likely.
+	\item All URLs included in the text are removed. These URL's are almost always a link to an organisations own story associated with the tweet context. Many organisations have multiple domains or sister-sites making these hard to isolate without removing all URL's.  
+	\item The string is converted to lower-case and split at each white-space, giving an array of individual words. This creates the sequence of tokens that can be most easily compared between organisations.
 \end{enumerate}
 
-These steps are applied uniformly across the corpus, and serve a core purpose. The underling task of this work is to identify the flow of linguistic structure within news. In order to achieve this, we need to standardise the text to the most common possible format, such that text of similar phrasing and meaning will be matched between sources. These tokenization and text cleaning steps allow for these similarities to be expressed.
+These steps are applied uniformly across the corpus to identify the flow of linguistic structure within news. In order to achieve this, we need to standardise the text to the most common possible format, such that text of similar phrasing and meaning will be matched between sources. These tokenization and text cleaning steps allow for these similarities to be expressed.
 
 
 \subsubsection{Vocabulary Sizes}\label{sec:vocabsizes}
 
-With the tweets of each Twitter account tokenized, we can begin to explore the vocabulary sizes. The vocabulary size is the number of unique tokens that exist in the collection of all tweets from a user. \autoref{fig:data_vocabvsactivity} shows the strong relationship between the amount of tweets produced and the number of unique words, with diminishing increases to vocabulary as new tweets are added.
+With the tweets of each Twitter account tokenized, we can begin to explore the vocabulary sizes. The vocabulary size is the number of unique tokens that exist in the collection of all tweets from a news-media organisation, as introduced in \autoref{sec:background_vocab_sizes}. \autoref{fig:data_vocabvsactivity} shows the strong relationship between the amount of tweets produced and the number of unique words, with diminishing increases to vocabulary as new tweets are added.
 
-The ratio of vocabulary size to the number of tweets provides a first glimpse into the level of complexity in the language. Accounts that have a more specific domain, such as `thehill', will increase their vocabulary at a slower rate as new tweets are added due to the consistently repeating domain specific words. In contrast, an account such as the `guardian' produces a diverse array of content, and hence has an inflated vocabulary size in contrast to it's output.
+The ratio of vocabulary size to number of tweets provides a first glimpse into the level of complexity in the language for each news-media organisation. Accounts that have a more specific focus/domain, such as poltical focused news (e.g. \emph{The Hill}), increase their vocabulary at a slower rate as new tweets are added due to the consistently repeating domain specific words. In contrast, an account such as the \emph{The Guardian} produces a diverse array of content, and hence has a larger vocabulary size in contrast to its output.
 
-We see the extreme variance in tweet activity reflected in the distribution of vocabulary size. The vocabulary sizes span from 2976 unique tokens (sciencedaily) to 40824 (guardian). 
+We see the extreme variance in tweet activity reflected in the distribution of vocabulary size. The vocabulary sizes span from 2976 unique tokens (\emph{ScienceDaily}) to 40824 (\emph{The Guardian}). 
 
-This presents a key challenge for the task at hand. This work needs to find information flows between news-media organisations which can have content corpus' that differ in size by two orders of magnitude, and vocabulary sizes that can differ by up to one. This can exacerbate the problems already presented by natural language, and informs the need to normalise flows in later sections.
+This presents a key challenge for this work. We need to find information flows between news-media organisations which can have content corpora that differ in size by two orders of magnitude, and vocabulary sizes that can differ by up to one. This can exacerbate the problems already presented by natural language, and informs the need to normalise flows in later sections.
 
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
 \centering
 \includegraphics{chapter1/figs/vocab_vs_activity.pdf}
 \caption{Vocabulary size from all tweets produced in 2019 for each news-media Twitter account and the total number of tweets produced.}\label{fig:data_vocabvsactivity}
 \end{figure}
 
+\subsection{Rank Frequency Distribution of Vocabulary}\label{sec:zipf_fit}
+
+In the remainder of this work we will often use this tokenized corpus of news-media tweets for our analysis. However, in some case we will want to generate synthetic text that has similar properties to our data here. As discussed in \autoref{sec:textgeneration}, we draw i.i.d. from a Zipf distribution to simulate such text. In order to match the properties of the data as best as possible, we fit a Zipf distribution to the data as show in \autoref{fig:data:fitted_zipf}. To extract the fitted scaling parameter of a Zipf distribution, we can fit a linear line to the log of each words frequency with the log of it's frequency rank, in the corpus of all tweets. As has been seen in other corpora~\cite{williams_text_2015}, the rank-frequency distribution shows two different scaling regimes, where common words scale with $\alpha\approx 0.8$ and uncommon words scale with a much higher $\alpha \approx 2$, with an overall scaling parameter of $\alpha=1.2$. Later in thesis this we will use a variety of values for $\alpha$, usually in the range between $0.5$ and $2$.
+
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics{chapter1/figs/fitted_zipf.pdf}
+\caption{Word frequency of tokens in the corpus of all tweets produced by all news-media organisations compared the rank of the tokens by frequency. Zipf law distributions are also shown for varying scaling parameters, $\alpha$. \label{fig:data:fitted_zipf}}
+\end{figure} 
+
+
+Having now collected, cleaned, and performed a basic analysis of the data, we will now use it for two key purposes. Firstly, the development of the entropy estimation tools in \autoref{ch:crossentropy} and information flow measures in \autoref{ch:quotermodel} will use this data -- and the synthetic generation of text based on it -- to validate the techniques as reliable tools of information flow extraction. We then apply these tools to the data a final time to produce a network, the analysis of which is discussed in \autoref{ch:ranking}.
 
 
 %\the\textwidth

@@ -1,0 +1,39 @@
+%!TEX root = ../thesis.tex
+\chapter{Conclusion}\label{ch:conclusion}
+
+\section{Summary and contribution to literature}
+
+
+The purpose of this thesis has been to outline and implement a methodology for estimating textual information flows between news-media organisations using data from social media. Importantly, these methods are context-free and capture all aspects of grammar and word choice present in text while maintaining the strict forward-in-time flow of information.
+
+To achieve this goal, \autoref{ch:data} outlined our collection of 2,977,980 tweets corresponding to a years worth of content from 154 news-media organisations on Twitter. These accounts represented a wide range of the political spectrum and news-topic interests (e.g. sports, science, politics, foreign policy), with each account having over 10,000 follows. While America-centric, these account provided a large corpus of data with which to develop and apply our information flow analysis.
+
+Using this data and synthetic text generation models based on it, \autoref{ch:crossentropy} introduced, formalised and verified the convergence of a non-parametric entropy rate estimator based on match lengths. This entropy rate estimator was then generalised into a cross-entropy rate estimator which carefully incorporated time-dependency into its cross-source match length calculations. 
+
+\autoref{ch:quotermodel} examined the use of these cross-entropy rate estimates as a measure of information flow, finding that simple entropies on their own are insufficient to capture the flow. Several new approaches to information flow estimation were introduced and their performance compared using simulations of quoting text on random networks of natural language text generators. These measures produce strong correlations with the true flow, but small quote probabilities are hard to detect amongst the inherent noise in natural language. This measure is then applied to the collected news Twitter data to produce a directed network of news-media organisations with edge weights representing information flow between them. 
+
+This information flow network allows for investigation into the direction and magnitude of net information flow between two organisations and facilitates the comparison of flow magnitudes between different pairs of news-media organisations.
+
+\autoref{ch:ranking} discovers that net influence of organisations in the network cannot be easily ranked as ranking methods are subject to high levels of sensitivity and different ranking approaches do not produce concordant results. The discussion of this limitation draws on two key ideas: that each ranking method is built from assumptions which are not always shared by other ranking approaches; and that attempting to create a robust simplification of a complex network is inherently fraught without over-reliance on those assumptions. In this sense, the investigation into ranking reveals the level of complexity in both the network of information flows and the news ecosystem from which it is built.
+
+
+From these results this thesis contributes to the original literature in three main ways:
+\begin{itemize}
+	\item the analysis of limits in the use of simple cross entropy estimators for robustly identifying information flow;
+	\item the introduction and validation of new measures of information-theoretic information flow that perform well in natural language systems;
+	\item and the application of information flow measures to a large corpus of textual news data from Twitter and the analysis of the resulting graph.
+\end{itemize}
+
+
+\section{Future research}
+
+While this research contributes to the literature in several ways, it also provides a platform for future research. Four clear areas with room for improvement are the extension of this measure to shorter time periods, the use of alternative flow measures, the further analysis of the news-media information flow network and the application of these techniques to other datasets.
+
+A shortcoming of the approach in this thesis is the averaging of information flow across the entire time period. While this helps counteract random noise from language and ensures convergence of estimators, if estimation could be performed using text data over smaller sub-periods of time, a new lens of temporal information flow could be explored. Rather than examining net information flow over a year, a finer grained temporal analysis could explore the impact of major stories throughout the year on the information flow ecosystem. In addition to this, added metadata about the individual stories being produced -- such as information about journalistic awards or breaking-news stories -- could unlock interesting research question about the relationship between journalistic quality and impact.
+
+An alternative to the refinement of these non-parametric information flow measures is their replacement with other formulations of information. This work used match-lengths on sequences of tokens, but recent advances in transformer based natural language models has allowed for contextual embeddings of language. These embeddings and other contextual information tools could provide an interesting alternative approach to measuring information flow in systems of textual data.
+
+The analysis of the constructed news-media information flow network was limited within this thesis in favour of focusing on the information estimation process. This network still has many interesting features yet to be explored and a more detailed analysis of the dynamics of flow may prove interesting as future research. 
+
+Finally, we hope the tools developed in this thesis are useful in future research studying information flows in any and every ecosystem where individuals or organisations produce and exchange textual information.
+
