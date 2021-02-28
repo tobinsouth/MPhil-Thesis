@@ -1,13 +1,13 @@
 %!TEX root = ../thesis.tex
-\chapter{Creating Robust Information Flow Measures}\label{ch:quotermodel}
+\chapter{Creating robust information flow measures}\label{ch:quotermodel}
 
 The question underpinning this work is how information flows between news organisations. The cross entropy rate estimation introduced in \autoref{ch:crossentropy} is an important tool to tackle this challenge, but is not sufficient in isolation. To understand information flow in the news-media ecosystem we need a tool that meets three criteria: (1) it must accurately identify how much information flows between outlets, (2) it must determine the direction of that flow, and (3) it must do so in the presence of information noise.
 
 In this chapter we examine the efficiency of the cross entropy rate as a tool for measuring information flow, and introduce new measures derived from it. These measures are tested in a variety of simulated conditions using both synthetic and real language data to determine the best approach for quantifying information flow.
 
 
-\section{The Quoter Model}
-The `Quoter Model'~\cite{bagrow_quoter_2018} is a simple model for capturing the dynamics of information flow on networks. This model places $N$ individuals in a network connected by directed edges. These edges indicate that a quoting process is occurring from the source of the edge, $j$, to the target, $i$. This network of quoting across edges is designed to mimic the information generation process of users on social media, where users create content by either adding new information to the platform, or copying/quoting information already seen in their feed.
+\section{The quoter model}
+The `quoter model'~\cite{bagrow_quoter_2018} is a simple model for capturing the dynamics of information flow on networks. This model places $N$ individuals in a network connected by directed edges. These edges indicate that a quoting process is occurring from the source of the edge, $j$, to the target, $i$. This network of quoting across edges is designed to mimic the information generation process of users on social media, where users create content by either adding new information to the platform, or copying/quoting information already seen in their feed.
 
 Each edge is assigned a quote probability, $q_{ji}$, and each node has a self generation probability, $q_{ii}$. These probabilities are used to decide how a node behaves at each time step of a simulation and are normalised such that $\sum_{\forall i} q_{ij} = 1$. The model repeatedly performs a process of text generation for $T$ steps. At each time point $t$, every node creates text through one of two processes.
 
@@ -22,7 +22,7 @@ In general, this results in a system of information being passed between the nod
 The \emph{self generation} process can use any arbitrary method for generating a sequence given a length $\lambda(t)$. In the case of the original model, two methods are used; drawing uniformly from a fixed vocabulary and drawing from a rank ordered vocabulary according to a Zipf distribution. In line with the previous chapter we use a Zipf distribution to generate text here.
 
 
-\subsection{Single Flow Estimation} 
+\subsection{Single flow estimation} 
 
 Previous work~\cite{bagrow_quoter_2018} used the Kontoyianni cross entropy rate to examine flow direction and quoting probability. This approach is reasonable, and deeply rooted in the quoter model construction. The quoter model produces sequences in the future of a quoter that exactly match the quoted source. It is these sequences which the match-length based cross entropy rate measure captures. However, this approach can break down when the producers of text have non-homogeneous text production methods.
 
@@ -41,7 +41,7 @@ As expected, the cross entropy, $h(T||S)$ and $q$ have a significant negative li
 
 A fitted linear model between the self entropy rate $h(T)$ and $q$ has a similar powerful negative linear relationship ($p<10^{-13}$, $R^2 = 0.886$). This result is a direct consequence of an important caveat of this model, its sensitivity to the vocabulary sizes of quote distributions. Indeed, the linear relationship between the normalised logged vocabulary of $T$ and the quote probability, $q$, shares the same predictive power ($p<10^{-13}$, $R^2 = 0.942$). This suggests that much of the predictive power in the cross entropy and self entropy rate is provided by the differences in vocabulary size between source and target. Hence, we first need to examine the the distributions of vocabulary size under quoting regimes before we can move on.
 
-\subsubsection{Vocabulary Sizes of Quoted Distributions}
+\subsubsection{Vocabulary sizes of quoted distributions}
 % https://math.stackexchange.com/questions/32800/probability-distribution-of-coverage-of-a-set-after-x-independently-randomly/32816#32816
 % https://math.stackexchange.com/questions/227556/the-exact-probability-of-observing-x-unique-elements-after-sampling-with-repla/1957820#1957820
 This tight relationship between vocabulary size and quoting probabilities can be explained by sampling from a distribution with replacement. 
@@ -65,14 +65,14 @@ $$P(V_T = v) = \frac{S_{2}(N, v) V_S!}{V_S^{N}(V_S-v)!}.$$
 \end{proof}
 
 
-From this result we can find that the expected value for $V_T$ is,
+From this we find that the expected value for $V_T$ is,
 $$E\left[V_T \right] = V_S\left(1-\left(1-\frac{1}{V_S}\right)^{N}\right) < V_S.$$ 
 
 This highlights an important point, that when taking a finite sample with replacement, the expected vocabulary size of the sample will be \emph{lower} than the source.
 
 This is a useful upper bound on the expectation of our quoter vocabularies. We expect the quoter model vocabularies sizes to be smaller again, due to the finite size of the text data during quoting. At early stages of the simulations, very little text exists in the source, and hence $V_S$ will be very small to start with. This means that under very high quote probabilities, $V_S$ must grow before $V_T$ can grow. 
 
-We can see this result in \autoref{fig:vocabsizes}. Two nodes are again simulated with a single flow edge between then as per \autoref{fig:fixedalphasingleflow}. When there is no quoting between the nodes ($q=0$), meaning they both draw words identically and independently using the self generation process, the nodes have almost identical vocabulary distributions. The nodes are simulated 10000 times for 1000 time steps of generation, giving a mean vocabulary size of 415 for both. However, when $q=1$ the target node is exclusively quoting from the source and does not produce text of its own. As expected from the above result, we see a significantly left-shifted vocabulary distribution, with the target node having a mean vocabulary size of 240. \autoref{fig:vocabsizes} reveals that this shift in vocabulary size change under increase $q$ is smooth, by running 10,000 simulations with $q \sim U(0,1)$.
+We can see this result in \autoref{fig:vocabsizes}. Two nodes are again simulated with a single flow edge between then as per \autoref{fig:fixedalphasingleflow}. When there is no quoting between the nodes ($q=0$), meaning they both draw words identically and independently using the self generation process, the nodes have almost identical vocabulary distributions. The nodes are simulated 10,000 times for 1000 time steps of generation, giving a mean vocabulary size of 415 for both. However, when $q=1$ the target node is exclusively quoting from the source and does not produce text of its own. As expected from the above result, we see a significantly left-shifted vocabulary distribution, with the target node having a mean vocabulary size of 240. \autoref{fig:vocabsizes} reveals that this shift in vocabulary size change under increase $q$ is smooth, by running 10,000 simulations with $q \sim U(0,1)$.
 
 \begin{figure}[!htbp]
 \centering
@@ -80,10 +80,10 @@ We can see this result in \autoref{fig:vocabsizes}. Two nodes are again simulate
 \caption{A source produces text from a Zipf distribution of words. A target produces text similarly with probability $1-q$ or quotes from the source with probability $q$. The vocabulary size of the source and target are calculated by taking the number of unique elements after 1000 time steps. The vocabulary size of the target decreases as $q$ increases.}\label{fig:vocabsizes}
 \end{figure}
 
-\subsubsection{Variable Vocabularies}
+\subsubsection{Variable vocabularies}
 We next validate the ability of a measure to detect information flow beyond quoting. To achieve this, we introduce an extra dimension of variability to the model. 
 
-We again have two text producers $S$ and $T$, shown in \autoref{fig:quoter_variable_vocab_tikz}, where $T$ quotes from $S$ with probability $q$. The source $S$ still creates text via a Zipf law distribution with scaling parameter $\alpha_S=1.5$, but the target $T$ now generates its own text at $\alpha_T \sim U(1.25,1.75)$. Having a larger scaling parameter will result in a smaller vocabulary distribution and \emph{vice-versa}. This creates an interesting challenge for our measure. It needs to both account for the quoting along the edge, as well as natural variations in the text generation of $T$.
+We again have two text producers $S$ and $T$, shown in \autoref{fig:quoter_variable_vocab_tikz}, where $T$ quotes from $S$ with probability $q$. The source $S$ still creates text via a Zipf law distribution with scaling parameter $\alpha_S=1.5$, but the target $T$ now generates its own text at $\alpha_T \sim U(1.25,1.75)$. Having a larger scaling parameter will result in a smaller vocabulary distribution and \emph{vice versa}. This creates an interesting challenge for our measure. It needs to both account for the quoting along the edge, as well as natural variations in the text generation of $T$.
 
 \begin{figure}[!htbp]
 \centering
@@ -95,7 +95,7 @@ edge [thick, <-] node[auto] {$q$} (s);
 \node at (0,-0.3) {$\alpha_S = 1.5$};
 \node at (2,-0.3) {$\alpha_T \sim U(1.25, 1.75)$};
 \end{tikzpicture}
-\caption{An diagram of a new quoting simulation regime. The target, $T$, now has a variable Zipf distribution scaling parameter for self generation, adding variability to the vocabulary size of it's own self generated text.}\label{fig:quoter_variable_vocab_tikz}
+\caption{An diagram of a new quoting simulation regime. The target, $T$, now has a variable Zipf distribution scaling parameter for self generation, adding variability to the vocabulary size of its own self generated text.}\label{fig:quoter_variable_vocab_tikz}
 \end{figure}
 
 The single flow experiment is run with these new generation protocols to vastly different results. \autoref{fig:flow_variablealphascatterplot}, the simulations with very low quoting probabilities exhibit high variance in the vocabulary size, which is directly attributable to the choice of $\alpha_T$. As the quoting probability approaches 1, the amount of self generation of text by $T$ reduces resulting in a vocabulary of slightly under 66\% of the $S$ vocabulary size, as expected.
@@ -129,18 +129,23 @@ Vocab($T$)& & & $0.490^{***}$& \\\hline
 \end{table}
 
 
-\section{Better Measures of Information Flow}
+\section{Novel measures of information flow}
 
 To better capture the true flow of information in a network, a more robust measure may be needed. Here we introduce several possible measures and test them in larger simulated networks.
 
 Our first measure is the most naive. We simply take the difference between the cross entropy rates in both directions, 
 \begin{equation}a_{\hat{h}}  = \hat{h}(T||S) - \hat{h}(S||T).\end{equation}
-Remembering that the measure needs to identify both the direction and magnitude of the flow across the edge, $a_{\hat{h}} >0$ indicates a flow from $S$ to $T$, and the reverse from $T$ to $S$ if $a_{\hat{h}} <0$. Further, a good metric should be able to distinguish between edges with and without flow ($q=0$). 
+Remembering that the measure needs to identify both the direction and magnitude of the flow across the edge, $a_{\hat{h}} >0$ indicates a flow from $S$ to $T$, and the reverse from $T$ to $S$ if $a_{\hat{h}} <0$. Further, a good metric should be able to distinguish between edges with and without flow ($q=0$). This first measure can be seen as an `absolute' measure.
 
-We introduce the second and third measures, \begin{equation}b_{\hat{h}} := \frac{\hat{h}(T||S)}{\hat{h}(T)} - \frac{\hat{h}(S||T)}{\hat{h}(S)},\end{equation}
+In contrast, the second and third measures, 
+\begin{equation}
+b_{\hat{h}} := \frac{\hat{h}(T||S)}{\hat{h}(T)} - \frac{\hat{h}(S||T)}{\hat{h}(S)},
+\end{equation}
 and
-\begin{equation}c_{\hat{h}} := \frac{\hat{h}(T||S)}{\hat{h}(S)} - \frac{\hat{h}(S||T)}{\hat{h}(T)},\end{equation}
-which normalise the cross entropy rates by the self entropy rates of the target, in $b_{\hat{h}}$, and the source, in $c_{\hat{h}}$. In theory, these self entropy rates may help create a fair comparison between the cross entropy rates in each direction.
+\begin{equation}
+c_{\hat{h}} := \frac{\hat{h}(T||S)}{\hat{h}(S)} - \frac{\hat{h}(S||T)}{\hat{h}(T)},
+\end{equation}
+normalise the cross entropy rates by the self entropy rates of the target, in $b_{\hat{h}}$, and the source, in $c_{\hat{h}}$. In theory, these self entropy rates may help create a fair comparison between the cross entropy rates in each direction.
 
 For example, if a source was to have an extremely large vocabulary, or otherwise have complex language leading to a high information content, the cross entropy rate would be naturally inflated regardless of the quoting probability. Normalisation by entropy rate may hence improve detection.
 
@@ -183,7 +188,7 @@ $ \displaystyle e_{\hat{\pi}} := \frac{\hat{\pi}(S||T)}{\sum_X \hat{\pi}(T||X)} 
 \end{table}
 
 
-\subsection{Larger Network Simulations}\label{sec:network_sizes}
+\subsection{Network simulations}\label{sec:network_sizes}
 To evaluate the quality of the information flow measures, we use quoter model simulations on larger networks to examine how the measures perform under various network types. 
 
 In \autoref{fig:flow_networksize}, cliques are generated for sizes, $N=2$ to $N=50$. In the clique, each possible pair of nodes, $(j,i)$, is connected with a direction (bi-directional links are not allowed) and a preliminary edge quote probability, $q_{ji}' \sim U(0,1)$. Each node is assigned a self generation probability, $q_{ii}=0.5$. The incoming quote probabilities are normalised across the local incoming edges, 
@@ -231,7 +236,7 @@ In addition to this, the increasing network size lowers the quote probabilities 
 
 \autoref{fig:flow_quote_scatterplot} shows these quote probability differences by comparing measures $a_{\hat{h}}$ and $e_{\hat{h}}$ against the edge quote probabilities ($q_{ij}$) from networks of size $N=8$ and $N=30$. The quote probability has a much larger range of [0,0.5] for the smaller $N=8$, with a smaller range [0, 0.14] for $N=30$.
 
-The variance in the measures for low quote probabilities is very similar at both network sizes, however, the high quote probabilities of the small network add leverage to the Pearson correlation. In essence, we can view the underlying variance in flow estimates as a property of the language complexity. Sub-sequences of text can repeat themselves independently in different generators when both draw from the same or similar distributions. This noise is a property of the self generation process, not the quoting process. Given the fixed self generation probability, this aspect of variance is constant regardless of the quote probabilities. \ts{Note new content here:} Indeed, when a no-intercept linear regression is performed for each $N$, the residuals exhibit homoscedasticity across the range of true quote probabilities and the standard deviation of the residuals is similar across all $N$ (95\% CI of $\sigma_{residuals}$: [0.186, 0.228]). 
+The variance in the measures for low quote probabilities is very similar at both network sizes, however, the high quote probabilities of the small network add leverage to the Pearson correlation. In essence, we can view the underlying variance in flow estimates as a property of the language complexity. Sub-sequences of text can repeat themselves independently in different generators when both draw from the same or similar distributions. This noise is a property of the self generation process, not the quoting process. Given the fixed self generation probability, this aspect of variance is constant regardless of the quote probabilities. Indeed, when a no-intercept linear regression is performed for each $N$, the residuals exhibit homoscedasticity across the range of true quote probabilities and the standard deviation of the residuals is similar across all $N$ (95\% CI of $\sigma_{residuals}$: [0.186, 0.228]). 
 
 Having high individual edge quote probabilities allows for the signal of those flows to be picked up through the noise, and leads to a stronger tail of high flow and high quote probability points. This naturally increases the Pearson correlation coefficient.
 
@@ -245,7 +250,7 @@ A common solution to high leverage points is to use a Spearman correlation coeff
 	\label{fig:flow_quote_scatterplot}
 \end{figure}
 
-To further verify this effect we can vary the previous fixed self generation probability. As before, the edge quote probabilities normalise such that all generation and quote probabilities sum to one. Increasing $q_{ii}$ thus has the effect of shrinking these edge quote probabilities $q_{ji}$. If the above logic holds, then we would expect these increasing $q_{ii}'s$ to decrease the Pearson correlation between $q_{ji}$ and the estimated flow. Indeed, in \autoref{fig:flow_self_p_vs_pearson_R} this pattern is observed with a clear decline in performance for all measures as the self generation probability increases. 
+To further verify this effect we can vary the previous fixed self generation probability. As before, the edge quote probabilities normalise such that all generation and quote probabilities sum to one. Increasing $q_{ii}$ thus has the effect of shrinking these edge quote probabilities $q_{ji}$. If the above logic holds, then we would expect the increasing $q_{ii}$ values to decrease the Pearson correlation between $q_{ji}$ and the estimated flow. Indeed, in \autoref{fig:flow_self_p_vs_pearson_R} this pattern is observed with a clear decline in performance for all measures as the self generation probability increases. 
 
 
 \begin{figure}[!htbp]
@@ -273,7 +278,7 @@ To isolate the effect of the network complexity on measure performance, we intro
 This leads to the conclusion: the ability of the measures to correctly identify information flow is mostly dependent on the strength of the underlying quote probabilities to overcome the inherent noise present in text. While this conclusion is clear from the above results, they have used a simulated language model using Zipf distributions rather than real natural language. In order to confirm these results real data must be incorporated.
 
 
-\section{Incorporating Properties of Real Data}
+\section{Incorporating properties of real data}
 A key limitation of the quoter model is the lack of foundation in real text data. Word generation processes such as those based on Zipf law are indeed derived from the analysis real data, but fall short of generating text that appears natural in most senses. The words generated using this method are independent, and lack the coherent structure of English grammar.
 
 To rectify this, we update the \emph{self generation} process to use real text data. Using the corpus of Twitter data for news sources, each node in a simulated quoter graph is assigned a single news source. At each time step of the simulation a node can self generate by drawing a single random tweet from the entire history of the chosen outlets tweets and appending it to the node's timestamped sequence. The quoting process is identical, with each quote now drawing on sequences made from real tweets. Each simulation is run for 8000 time steps to maintain a consistent average sequence length. 
@@ -287,7 +292,7 @@ Since the average number of tweets for each news outlets is 19,337, drawing unif
 	\label{fig:flow_realdataquotermodel}
 \end{figure}
 
-Using this new self generation process the same expierments are run as above. \autoref{fig:flow_realdataquotermodel} combines the results from \autoref{fig:flow_sizeandER}, \autoref{fig:flow_self_p_vs_pearson_R} and \autoref{fig:flow_zipf_watts_strogatz_model}, updated to use real data. The core results outlined above remain exactly the same when using real data in place of simulated text in the model. 
+Using this new self generation process the same experiments are run as above. \autoref{fig:flow_realdataquotermodel} combines the results from \autoref{fig:flow_sizeandER}, \autoref{fig:flow_self_p_vs_pearson_R} and \autoref{fig:flow_zipf_watts_strogatz_model}, updated to use real data. The core results outlined above remain exactly the same when using real data in place of simulated text in the model. 
 
 
 \section{Go with the flow: applying the information flow measure}\label{sec:gowiththeflow}
@@ -315,12 +320,19 @@ as the most robust tool to estimate information flows in networks of natural lan
 
 \subsubsection{Results of applying the best measure}
 
-Using measure $e_{\hat{\pi}}$ we can perform estimates of information flow between each pair of news organisations. In \autoref{sec:running_estimations} we performed the estimation of the entropy rates and cross entropy rates between all pairs of organisations using the entire corpus of tweets by each organisation for the 2019 calender year. Once these estimates are calculated, applying the information flow measure is computationally simple final step to extracting the estimates of flow. \autoref{fig:flow_appliedtodata} shows the distribution of these estimates for all pairs of organisations. As $e_{\hat{\pi}}$ is symmetrical around 0 when you swap the source and target, we choose the positive flow as thedirection of the edge and assign it's weight to be the flow estimate.
+Using measure $e_{\hat{\pi}}$ we can perform estimates of information flow between each pair of news organisations. In \autoref{sec:running_estimations} we performed the estimation of the entropy rates and cross entropy rates between all pairs of organisations using the entire corpus of tweets by each organisation for the 2019 calender year. Once these estimates are calculated, applying the information flow measure is computationally simple final step to extracting the estimates of flow. \autoref{fig:flow_appliedtodata} shows the distribution of these estimates for all pairs of organisations. As $e_{\hat{\pi}}$ is symmetrical around 0 when you swap the source and target, we choose the positive flow as the direction of the edge and assign its weight to be the flow estimate.
+
+% \begin{figure}[!htbp]
+% 	\centering
+% 	\includegraphics{./chapter3/figs/edge_weights.pdf}
+% 	\caption{Information flow is estimated using measure $e_{\hat{\pi}}$ between each pair of news-media organisations using their entire tweet corpus. Each edge is assigned a direction and the positive weights of those edges are shown here. Most edges show very little information flows with only 1.6\% of edges having a flow estimate above 0.2. }
+% 	\label{fig:flow_appliedtodata}
+% \end{figure}
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics{./chapter3/figs/edge_weights.pdf}
-	\caption{Information flow is estimated using measure $e_{\hat{\pi}}$ between each pair of news-media organisations using their entire tweet corpus. Each edge is assigned a direction and the positive weights of those edges are shown here. Most edges show very little information flows with only 1.6\% of edges having a flow estimate above 0.2. }
+	\includegraphics{./chapter3/figs/edge_weights_ccdf.pdf}
+	\caption{\ts{This is your CCDF Matt. I'm not sure how much information this actually adds. Should we keep it?} Information flow is estimated using measure $e_{\hat{\pi}}$ between each pair of news-media organisations using their entire tweet corpus. Each edge is assigned a direction and the positive weights of those edges are shown. Most edges show very little information flows with only 1.6\% of edges having a flow estimate above 0.2. A complementary cumulative distribution function is shown with a fitted power law with exponent 5.6. }
 	\label{fig:flow_appliedtodata}
 \end{figure}
 
@@ -330,7 +342,7 @@ Two key features of \autoref{fig:flow_appliedtodata} stand out: the heavy right 
 
 Noting the challenge created by information noise, these flow edges are useful for two purposes: comparing the magnitude of flows between two different pairs, and identifying the direction of flow when the flow estimate is large enough. As an example of the first, we can find that, as an information source, the \emph{New York Times} has relatively little net information flow to the \emph{Washington Post} (0.0053) but relatively high net information flow to the \emph{Foreign Affairs Magazine} (0.1480).
 
-As an example of the second purpose, we examine the highest flow edge in the network, from the \emph{Scientific American} to \emph{ScienceDaily}.  This edge with weight (0.7378) is likely due to a confounding of factors. Firstly, \emph{Scientific American} is a popular and well resourced organisation that produces a large volume of content. The smaller and less popular \emph{ScienceDaily} is unlikely to get the 'scoop' on many scientific stories meaning most content it posts will exist in the history of \emph{Scientific American}. Finally, \emph{ScienceDaily} has the least tweets, tokens and second least vocabulary of any organisation. This makes the normalisation of the information flows difficult due to its vocabulary being at the extreme of the distribution. 
+As an example of the second purpose, we examine the highest flow edge in the network, from the \emph{Scientific American} to \emph{ScienceDaily}.  This edge with weight (0.7378) is likely due to a confounding of factors. Firstly, \emph{Scientific American} is a popular and well resourced organisation that produces a large volume of content. The smaller and less popular \emph{ScienceDaily} is unlikely to get the `scoop' on many scientific stories meaning most content it posts will exist in the history of \emph{Scientific American}. Finally, \emph{ScienceDaily} has the least tweets, tokens and second least vocabulary of any organisation. This makes the normalisation of the information flows difficult due to its vocabulary being at the extreme of the distribution. 
 
 In constructing these weighted edges into a network, it would be ideal to filter out low flow edges to make the graph more sparse for analysis. However, choosing such cut-offs can prove dubious at best. In the next chapter we explore several methods of using this network to rank the net information influence of news-media organisations and examine the inconsistency in their results.
 

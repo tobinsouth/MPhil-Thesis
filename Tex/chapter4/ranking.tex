@@ -1,5 +1,5 @@
 %!TEX root = ../thesis.tex
-\chapter{Influence Detection \& Ranking Stability }\label{ch:ranking}
+\chapter{Influence detection \& ranking stability }\label{ch:ranking}
 
 % \epigraph{Simplicity is a great virtue but it requires hard work to achieve it and education to appreciate it. And to make matters worse: complexity sells better.}{Edsger Wybe Dijkstra}
 
@@ -16,7 +16,7 @@ This chapter will not produce a definitive ranking of importance, but rather wil
 % We will show that there are many approaches to achieve this, each with their own justifications and shortcomings. Such approaches - even when well formulated - can have unexpected sensitivities to changes in the network and ranking consensus across methods is rare. Extreme care should be taken when attempting to answer such a question from a network, especially in contexts where small decisions can have significant impacts on results.
 
 
-\section{Spotify: A motivating example}
+\section{Spotify: a motivating example}
 
 Recent work by South \emph{et al.}~\cite{south_centrality_2021} has looked into the stability of eigenvector centrality in the network of musical artist collaborations using data from Spotify. This work collected the discography, genre, popularity and other metadata for over 1.25 million artists using the online music streaming platform. From the discography, a network of artists was created with edges indicating that two artists appear on an piece of music together. 
 
@@ -50,26 +50,26 @@ This critical transition in centrality is shown in \autoref{fig:rank_spotify_shi
 The purpose of this example is to highlight a key issue. Centralities and rankings can be susceptible to critical changes even from small perturbations in the data. This certainly does not make for a good ranking, but how does one measure a `good' ranking?
 
 
-\section{Rank Stability}
+\section{Rank stability}
 
-There are many criteria with which one can judge a ranking system: a notion of `truthfulness'; a desire for resistance to being `gamed'; or a desire for consistency of the ranking when small changes occur. Though not an exhaustive list, these are fair criteria, but are rife with issues. So let's use these building blocks to construct some more robust metrics.
+There are many criteria which one can judge a ranking system: a notion of `truthfulness'; a desire for resistance to being `gamed'; or a desire for consistency of the ranking when small changes occur. Though not an exhaustive list, these are fair criteria, but are rife with issues. In this chapter we use these building blocks to construct some more robust metrics.
 
-Every ranking method is truthful to it's own definition, but generalising this to a Platonic ideal is difficult. Instead we could seek a unanimity between rankings. As we will see below, there are usually a large number of possible ranking approaches to any given problem. A good set of ranking methods should produce similar rankings when drawing upon similar definitions and assumptions.
+Every ranking method is truthful to its own definition, but generalising this to a Platonic ideal is impossible. Instead we could seek a unanimity between rankings. As we will see below, there are usually a large number of possible ranking approaches to any given problem. A good set of ranking methods should produce similar rankings when drawing upon similar definitions and assumptions.
 
-Creating resistance to undue manipulation is a difficult problem, not only because defining `undue' is problematic. Any system of ranking must be manipulated by the results of comparisons between elements. The issues arise when a single element, player, or node can alter the rankings dramatically though only it's behaviour. In our context of ranking news information influence we will use a simple definition. We want to minimise the influence that a single addition of removal of a node from the network has on the rankings.
+Creating resistance to undue manipulation is a difficult problem, not only because defining `undue' is problematic. Any system of ranking must be manipulated by the results of comparisons between elements. The issues arise when a single element, player, or node can alter the rankings dramatically though only its behaviour. In our context of ranking news information influence we will use a simple definition. We want to minimise the influence that a single addition of removal of a node from the network has on the rankings.
 
-This definition sits close to our third criterion, consistency of ranking. When a small change in the graph occurs, such as the removal of a single node, we would want the ranking change to be correspondingly small. This desire for rank stability stands in contrast to the motivating example above, where the centrality ranking underwent a total overhaul during a critical transition. This is something a strong ranking should avoid. Further to this, consistency of ranking should be maintained across rankings, especially when these ranking methods are similar in nature. 
+This definition sits close to our third criterion, consistency of ranking. When a small change in the graph occurs, such as the removal of a single node, we would want the ranking change to be correspondingly small. This desire for rank stability stands in contrast to the motivating example above, where the centrality ranking underwent a total rearrangement during a critical transition. This is something a strong ranking should avoid. Further to this, consistency of ranking should be maintained across rankings, especially when these ranking methods are similar in nature. 
 
 
-\subsection{Ranking Methods}
+\subsection{Ranking methods}
 
-Before diving deeper into this discussion, lets first define some methods of ranking the news-media outlets in our network. A vast array of ranking methods exist, but not all are suited to any one problem. In our problem, we want to rank influence in a weighted directed network. Here we will use four methods for comparison: two network centralities, a method of sport team ranking, and a network topology approach. We will also outline why many alternative metrics are not useful in this context. This list of methods is not exhaustive, but provides a substantive example of several approaches which will allow for an analysis of the viability of ranking influence in an information flow network. 
+Before proceeding further, we first define some methods of ranking the news-media outlets in our network. A vast array of ranking methods exist, but not all are suited to any one problem. In our problem, we want to rank influence in a weighted directed network. Here we will use four methods for comparison: two network centralities, a method of sport team ranking, and a network topology approach. We will also outline why many alternative metrics are not useful in this context. This list of methods is not exhaustive, but provides a substantive example of several approaches which will allow for an analysis of the viability of ranking influence in an information flow network. 
 
-\subsubsection{Network Centralities}
+\subsubsection{Network centralities}
 
 Network centrality metrics are a common tool for measuring different notions of importance within a network. However, these notions of importance are often context specific. For example, betweenness centrality is a powerful metric that measures the number of shortest paths that pass through a node. This centrality is very useful in a context such a packet routing and load balancing, where a comparatively high value in the centrality (and thus a low rank) would indicate a high burden of traffic and the importance of reliability of that node. In the context of our question, this centrality doesn't illuminate who \emph{contributes} the information, but rather what nodes have the most \emph{pass-through} of information. In a similar vein, centralities such as degree and closeness also provide answers to questions we are not asking here.
 
-A centrality measure that has the characteristics we are looking for is \emph{eigenvector centrality}. Eigenvector centrality, sometimes referred to as \emph{eigencentrality}, is defined recursively in terms of the centrality of a node's neighbourhood. This stems from the notion that a node is important if it is connected to other important nodes. In our context of information flow we can restate this as: a node is an important contributor of information if it contributes to other important information contributors. In essence, if a node contributes to a few unimportant nodes, it itself is unimportant; but those nodes that contribute to influential sources, are themselves influential.
+A centrality measure that has characteristics appropriate to our context is \emph{eigenvector centrality}. Eigenvector centrality, sometimes referred to as \emph{eigencentrality}, is defined recursively in terms of the centrality of a node's neighbourhood. This stems from the notion that a node is important if it is connected to other important nodes. In our context of information flow we can restate this as: a node is an important contributor of information if it contributes to other important information contributors. In essence, if a node contributes to a few unimportant nodes, it itself is unimportant; but those nodes that contribute to influential sources, are themselves influential.
 
 This importance rating is encapsulated in a vector $v^{\rm(eig)}$ which is defined through the recursive equation
 \begin{equation}\label{eq:eigenvector}
@@ -93,15 +93,15 @@ Mathematically PageRank centrality is expressed as,
 \end{equation}
 Traditional formulations of PageRank use unweighted directed graphs, such as the hyper-link web graph, but it naturally extends to weighted graphs.
 
-PageRank and Eigenvector centrality make for an interesting comparison. They are very similar metrics and hence we would expect their rankings to be similar. 
+PageRank and Eigenvector centrality make for an interesting comparison. They are very similar metrics and hence we should expect their rankings to be similar. 
 
 There are other centrality measures that may be relevant here, such as the HITS algorithm for finding hubs and authorities, however we choose only these two a popular examples of network centralities as they illustrate the interesting phenomena.
 
-\subsubsection{Game Result Rankings}
+\subsubsection{Game result rankings}
 
 Moving beyond graph theory, there is a rich literature of ranking in the sporting world~\cite{langville_whos_2012}. A core feature of this world is the notion of a match, where two opposing sides face off, resulting in some score difference or binary outcome. In most of these situations, matches can be seen as an edge between two competing nodes, with the outcome determining the direction. As such several sports ranking algorithms can be directly applied to a network setting.
 
-For our purposes, each edge represents a information competition between two news-outlet to see who produces the most novel information into the ecosystem. Since we are viewing all these `matches' at the end of the season (the year of data collection), we rule out ranking systems that evolve over time according to the relative rankings at the time of play (such as the Elo system~\cite{elo_rating_1978}). We choose a simple but relative institutive ranking system as a means of representing these game based ranking methods.
+For our purposes, each edge represents a ``information competition'' between two news-outlet to see who produces the most novel information into the ecosystem. Since we are viewing all these `matches' at the end of the season (the year of data collection), we rule out ranking systems that evolve over time according to the relative rankings at the time of play (such as the Elo system~\cite{elo_rating_1978}). We choose a simple but relatively institutive ranking system as a means of representing these game based ranking methods.
 
 
 Massey's rating method~\cite{massey_statistical_1997,langville_whos_2012} draws on a simple idealised equation,
@@ -114,13 +114,13 @@ In our case, there is a single match between each pair of nodes to produce a vec
 
 This system is best solved as a least squares problem, $X^TX\mathbf{r}=X^T\mathbf{y}$, however $X^TX$ is not invertible as the columns are linearly dependent. In Massey's method, the final row of the matrix $X^TX$ is replaced with ones, and the corresponded $X^T\mathbf{y}$ element is replace by a zero. This additional constraint ensures the ratings sum to one and forces the least squares problem to have a unique solution.
 
-\subsubsection{Topological Sorting}
+\subsubsection{Topological sorting}
 
-Returning firmly to the world of graph theory, we present a method of using a directed acyclic graph to produce the rankings. Considering again our question of examining which outlets produce the most novel information. In an idealised sense, we would hypothesise a set of super-producer nodes which produce a large amount of information which then trickles down the information flow graph in which each node absorbs information and re-synthesises it with new discussions, which is henceforth passed down to other nodes. This mental picture as described has a mathematical representation, a directed acyclic graph (DAG). Formally defined, a DAG is a graph that has no cycles, meaning that no sequence of edge hops will ever loop back on itself.
+Finally, we present a method of using a directed acyclic graph to produce the rankings. Consider again our question of examining which outlets produce the most novel information. In an idealised sense, we would hypothesise a set of super-producer nodes which produce a large amount of information which then trickles down the information flow graph in which each node absorbs information and re-synthesises it with new discussions, which is henceforth passed down to other nodes. This mental picture as described has a mathematical representation, a directed acyclic graph (DAG). Formally defined, a DAG is a graph that has no cycles, meaning that no sequence of edge hops will ever loop back on itself.
 
 Our densely connected information flow network is not itself a DAG as many cycles of flow exists. To create a DAG, a greedy approach can be taken where the lowest flow edges are removed sequentially until a DAG is achieved. This greedy approach removes 91.1\% of the edges, and although more optimal DAG creation approaches exist, this method is used for simplicity. 
 
-Using this DAG a topological sorting can be created. A topological sorting is one in which node $x$ will be higher ranked than $y$ if and only if no directed edge or series of connected directed edges exist such that you could move from $y$ to $x$. Put more simply, if an edge in the DAG goes from an outlet $a$ to outlet $b$, then $a$ \underline{must} be higher ranked than $b$ in the sorting.
+Using this DAG a topological sorting can be created. A topological sorting is one in which node $x$ will be higher ranked than $y$ if and only if no directed edge or series of connected directed edges exist such that one could move from $y$ to $x$. Put more simply, if an edge in the DAG goes from an outlet $a$ to outlet $b$, then $a$ \underline{must} be higher ranked than $b$ in the sorting.
 
 This naive topological sorting has one major flaw in that it is not necessary unique\footnote{Naive topological sorts \emph{can} be unique if the DAG itself is a Hamiltonian path. This would require the constructed DAG to be a single long chain of flows, which our data most definitely does not produce.}. Consider the diamond problem as shown in \autoref{fig:rank_tikz_dag}, where a single node $a$ connects down to two nodes $b$ and $c$ which themselves individually connect down to node $d$. In such a DAG, $b$ and $c$ are interchangeable in the ranking (i.e.\ orders $(a,b,c,d)$ and $(a,c,b,d)$ are both correct rankings).
 
@@ -152,7 +152,7 @@ We compare these rankings using the Kendall rank correlation coefficient, referr
 \tau=\frac{(\text { number of concordant pairs })-(\text { number of discordant pairs })}{\binom{n}{2}},
 \end{equation}
 where a pair of elements $(x,y)$ are said to be concordant if the relative ordering of those two elements in both rankings is the same. The pair are discordant if $x$ ranks \emph{higher} than $y$ in one ranking and \emph{lower} in another.
-If two rankings are perfectly matched $\tau$ is 1 and $\tau$ is -1 if a ranking is compared with it's reverse. 
+If two rankings are perfectly matched $\tau$ is 1 and $\tau$ is -1 if a ranking is compared with its reverse. 
 
 We run the experiment, removing each node once before putting it back, to test the rank stability of the measures introduced above. When ranking is rerun on the network with a single node removed, there can be a significant change in the ordering. While many node removals result in very little ranking change in \autoref{fig:rank_boxplots}, some nodes have a large effect with the new ranking appearing close to a random reshuffle of the ordering ($\tau$ close to 0). When we compare two rankings with $n$ and $n-1$ nodes from a removal, we ignore the removed node from the original ranking order.
 
@@ -162,7 +162,7 @@ We run the experiment, removing each node once before putting it back, to test t
 \caption{Network ranking measures undergo sensitivity testing by ranking the network with a single node removed and comparing to the original ranking. This is repeated for each possible node removal in the network for all ranking measures. All measures show an average positive correlation between new and original rankings, with a high degree of variance in the sensitivity. PageRank has the best worst-case and worse average-case while topological sorting has the best average-case and worst worst-case.}\label{fig:rank_boxplots}
 \end{figure}
 
-The eigenvector, PageRank and Massey methods all have similar characteristics of sensitivity, while the topological sorting has a slightly more skewed distribution. The directed acyclic graph means that any node removal of a leaf (a node without any children), will have no change in the ranking aside from it's removal, creating a strong cluster of results at $\tau=0$. In contrast, removal of nodes in the central paths of the DAG will likely result in a new DAG structure being generated, strongly altering the rankings.
+The eigenvector, PageRank and Massey methods all have similar characteristics of sensitivity, while the topological sorting has a slightly more skewed distribution. The directed acyclic graph means that any node removal of a leaf (a node without any children), will have no change in the ranking aside from its removal, creating a strong cluster of results at $\tau=0$. In contrast, removal of nodes in the central paths of the DAG will likely result in a new DAG structure being generated, strongly altering the rankings.
 
 Importantly, all of these measures have a comparable level of sensitivity, without any stand-outs. Does this mean any of the measures are sufficient as rankings? To answer this we turn to comparing the methods directly.
 
@@ -174,14 +174,14 @@ We use Kendall's $\tau$ to compare the ranking of the information flow network p
 \caption{A comparison of the ordinal association between the rankings of each measure when applied to the information flow graph. All four measures show a limited correlation between each other, with the topological approach differing most from the non-negative matrix approaches.}\label{fig:rank_comparison}
 \end{figure}
 
-To reinforce this, \autoref{tab:ranking_top10} shows the top ten most influential news-media organisations according to each of the ranking methods. While many organisations are common to each rankings top 10, the detailed order differs significantly among each of the rankings. This is representative of the differences through the range of rankings for each method.  Full lists of rankings are available in \autoref{app:rankings_app}.
+To reinforce this, \autoref{tab:ranking_top10} shows the top ten most influential news-media organisations according to each of the ranking methods. While many organisations are common to each ranking's top 10 (e.g. \emph{USA Today}, \emph{The Washington Post}) , the detailed order differs significantly among each of the rankings. This is representative of the differences through the range of rankings for each method. Full lists of rankings are available in \autoref{app:rankings_app}.
 
 
 \begin{table}[!htbp]
 \centering
 \begin{tabular}{rlllll}
 \toprule
-Rank &  Eigencentraility & Pagerank &  Mossey & Topological Sort \\
+Rank &  Eigencentraility & Pagerank &  Massey & Topological Sort \\
 \midrule
 1  &        usatoday &        usatoday &   rightsidenews &       business \\
 2  &        huffpost &         nytimes &        usatoday &  realdailywire \\
@@ -198,13 +198,20 @@ Rank &  Eigencentraility & Pagerank &  Mossey & Topological Sort \\
 \caption{Top 10 most influential news-media organisations according to each measure, listed as their Twitter account handles. The rankings can differ significantly across methods although many of the top 10 are shared between methods.}\label{tab:ranking_top10}
 \end{table}
 
+\subsubsection{Regression of rank onto organisation metadata}
+An analysis was performed to examine the impact of news-organisation size and bias on ranking. For each ranking approach, a series of linear regressions were performed fitting the rank of an organisation to its follower count, number of tweets and political bias as introduced in \autoref{ch:data}. Regressions were performed for all possible combinations of explanatory variables. Political bias was treated as a categorical variable and all models included an intercept. 
+
+For eigencentraility, pagerank and Massey rankings, none of the 21 models had sufficient significance to reject the null model at the 5\% level. The topological ranking had significant models, but among them only the follower count was a significant variable. In these models a higher follower count was positively correlated with a better ranking; while statistically significant, this only explained 5.2\% of the variance.
+
+
+
 \section{Discussion}
 
 % <internal consistency>
 Ranking methodologies are inherently fraught with assumptions and bias. As is the case here, ranking influence in a flow graph is underpinned by a constructed notion of influence. These assumptions are contextual and can be well justified; however communicating these assumptions can be difficult when a viewer seeks a simple definitive list. This exacerbates the challenge of communication, where assumptions and bias must be so clear as to be obvious to a viewer. In some cases this is possible, such as where the ranking metric is a simple statistic (i.e.\ students average grades in a course, the market capitalisation of a company) or where the ranking principles are well established (i.e.\ the use of Elo in chess ranking). In situations where the source material is more complex -- such as the case of a flow graph -- norms and assumptions around ranking is not well established, and communication of these can prove difficult.
 
 % <assumptions>
-Even with clearly established assumptions, often no method of ranking is clearly superior. It is often dangerous to choose a single method \emph{ad-hoc}, as each method comes with it's own trade-offs. Consider the case of the Elo ranking system~\cite{elo_rating_1978}; this ranking system is only a useful comparative tool within it's own rating pool. If two individuals are ranked equally first or have the same high Elo across two sports, say chess and table tennis, it's difficult to compare how exceptional these two individuals are to each other without a knowledge of the ratings of many other players. Elo himself noted the difficulty of rating players, comparing it to ``the measurement of the position of a cork bobbing up and down on the surface of agitated water with a yard stick tied to a rope and which is swaying in the wind''~(Arpad Elo, Chess Life, 1962). Indeed, most popularly rating or ranking systems have their critics. The desire to fairly rate academic influence has brought criticism to naive citation counts in favour of alternative metrics such as the h-index~\cite{hirsch_index_2005}, which has itself spawned it's own academic niche through it's many derivatives and alternatives~\cite{alonso_h-index_2009}. 
+Even with clearly established assumptions, often no method of ranking is clearly superior. It is often dangerous to choose a single method \emph{ad-hoc}, as each method comes with its own trade-offs. Consider the case of the Elo ranking system~\cite{elo_rating_1978}; this ranking system is only a useful comparative tool within its own rating pool. If two individuals are ranked equally first or have the same high Elo across two sports, say chess and table tennis, it's difficult to compare how exceptional these two individuals are to each other without a knowledge of the ratings of many other players. Elo himself noted the difficulty of rating players in the 1962 Chess Life magazine, comparing it to ``the measurement of the position of a cork bobbing up and down on the surface of agitated water with a yard stick tied to a rope and which is swaying in the wind''~\cite{eloUSCFRatingFormulae1962}. Indeed, most popular rating or ranking systems have their critics. The desire to fairly rate academic influence has brought criticism to naive citation counts in favour of alternative metrics such as the h-index~\cite{hirsch_index_2005}, which has itself spawned its own academic niche through its many derivatives and alternatives~\cite{alonso_h-index_2009}. 
 
 Even in cases where methods are well respected and assumptions are well defined, these methods can have major flaws. Take for example the case of PageRank centrality discussed above. This centrality is considered robust and well established in the field of web page ranking, and underpins the original Google search engine~\cite{brin_anatomy_1998}. Despite this, PageRank centrality can have dangerous sensitivity even in the context of a web-graph~\cite{ng_link_2001}. We saw ourselves in \autoref{fig:rank_boxplots} that small changes in a complex network can have a large effect on the rankings. Many rating methods are exposed to sensitivity concerns under the right network conditions, and these risks can be hard to both account for and to communicate to a viewer.
 % </assumptions>
