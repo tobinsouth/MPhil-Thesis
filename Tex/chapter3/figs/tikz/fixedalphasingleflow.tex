@@ -20,8 +20,8 @@ edge [thick, <-] node[auto] {$q$} (s);
 		\hline
 		Variable          & Coefficient    & $R^2$ \\
 		\hline
-		$h(T||S)$ & $-0.291^{***}$ & 0.996 \\
-		$h(T)$            & $-0.275^{***}$ & 0.886 \\
+		$\hat{h}(T||S)$ & $-0.291^{***}$ & 0.996 \\
+		$\hat{h}(T)$            & $-0.275^{***}$ & 0.886 \\
 		Vocab of $T$      & $-0.283^{***}$ & 0.942 \\
 		\hline
 		\multicolumn{3}{c}{$p_{val}<0.1^*$, $p_{val}<0.01^{**}$, $p_{val}<0.001^{***}$} \\ 
@@ -41,7 +41,7 @@ xmin=-0.05, xmax=1.05,
 xtick style={color=black},
 xticklabels={},
 y grid style={white!69.0196078431373!black},
-ylabel={\(\displaystyle h(T||S)\)},
+ylabel={\(\displaystyle \hat{h}(T||S)\)},
 ymin=2.94561901752405, ymax=3.79330307545049,
 ytick style={color=black},
 ytick={2.9,3,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8},
@@ -177,8 +177,8 @@ x grid style={white!69.0196078431373!black},
 xlabel={Quote Probability, \(\displaystyle q\)},
 xmin=-0.05, xmax=1.05,
 xtick style={color=black},
-xtick={-0.2,0,0.2,0.4,0.6,0.8,1,1.2},
-xticklabels={\(\displaystyle {-0.25}\),\(\displaystyle {0.00}\),\(\displaystyle {0.25}\),\(\displaystyle {0.50}\),\(\displaystyle {0.75}\),\(\displaystyle {1.00}\),\(\displaystyle {1.25}\),},
+xtick={0,0.2,0.4,0.6,0.8,1,1.2},
+xticklabels={\(\displaystyle {0.0}\),\(\displaystyle {0.2}\),\(\displaystyle {0.4}\),\(\displaystyle {0.6}\),\(\displaystyle {0.8}\),\(\displaystyle {1.0}\),},
 y grid style={white!69.0196078431373!black},
 ylabel={Vocabulary Size of \(\displaystyle T\)},
 ymin=900.95, ymax=1650.05,
@@ -296,7 +296,7 @@ scaled y ticks=manual:{}{\pgfmathparse{#1}},
 tick align=outside,
 tick pos=left,
 x grid style={white!69.0196078431373!black},
-xlabel={\(\displaystyle h(T)\)},
+xlabel={\(\displaystyle \hat{h}(T)\)},
 xmin=3.46760993191436, xmax=3.78095124480664,
 xtick style={color=black},
 xtick={3.4,3.5,3.6,3.7,3.8},
