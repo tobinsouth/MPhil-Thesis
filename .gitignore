@@ -2,6 +2,8 @@
 .DS_Store
 Examples/
 Notes/Elements of Information Theory .pdf
+Paper/
+.vscode
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
