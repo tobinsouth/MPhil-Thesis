@@ -10,7 +10,7 @@ In this thesis, new comparative techniques are developed to estimate textual inf
 
 Resulting information flows are constructed into a network of news-media organisations, which Chapter 6 uses to examine approaches of ranking influence using examples from centrality, sport ranking and network topology. The interconnected nature of the information flow ecosystem proves resistant to simplification, demonstrating implicit complexity in the flow dynamics.
 
-In total, this work provides a new methodology for examining the in- formation transmitted between content producers in any connected system of natural language, a toolkit with applications to the many networked dis- courses of our online world.
+In total, this work provides a new methodology for examining the information transmitted between content producers in any connected system of natural language, a toolkit with applications to the many networked dis- courses of our online world.
 
 
 
