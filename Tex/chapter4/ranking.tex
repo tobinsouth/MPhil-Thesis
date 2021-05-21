@@ -5,11 +5,11 @@
 
 \epigraph{Everything should be made as simple as possible, but not simpler.}{Albert Einstein, {\em commonly paraphrased quote from his Herbert Spencer Lecture}, Oxford, June 10, 1933.}
 
-Complex networks are powerful tools to encapsulate and probe deeper aspects of systems; however, this can often come at the cost of human interpretability. Answering questions is a important task for such networks, but simplifying networks to answer questions can be fraught with challenges.
+Complex networks are powerful tools to encapsulate and probe deeper aspects of systems; however, this can often come at the cost of human interpretability. Answering questions is an important task for such networks, but simplifying networks to answer questions can be fraught with challenges.
 
 In this chapter we will examine the use of the network created in \autoref{ch:quotermodel} to explore the process of answering a specific question: which news-media organisations are the most important information sources? In essence, this question is one of ranking the news-media organisations according to their importance to the information flow network. 
 
-While ranking is often assumed to be a simple task, we will show in this chapter that different approaches to ranking a influence network can result in vastly different answers. Such approaches are built upon assumptions of importance that are often inconsistent with one another. Even standalone these approaches can exhibit unexpected sensitivities to changes in the network.
+While ranking is often assumed to be a simple task, we will show in this chapter that different approaches to ranking an influence network can result in vastly different answers. Such approaches are built upon assumptions of importance that are often inconsistent with one another. Even standalone these approaches can exhibit unexpected sensitivities to changes in the network.
 
 This chapter will not produce a definitive ranking of importance, but rather will use the question to explore the difficulty in constructing such an answer from a complex network. Doing so reveals the interconnected nature of the information flow ecosystem and its resistance to simplification.
 
@@ -52,11 +52,11 @@ The purpose of this example is to highlight a key issue. Centralities and rankin
 
 \section{Rank stability}
 
-There are many criteria which one can judge a ranking system: a notion of `truthfulness'; a desire for resistance to being `gamed'; or a desire for consistency of the ranking when small changes occur. Though not an exhaustive list, these are fair criteria, but are rife with issues. In this chapter we use these building blocks to construct some more robust metrics.
+There are many criteria by which one can judge a ranking system: a notion of `truthfulness'; a desire for resistance to being `gamed'; or a desire for consistency of the ranking when small changes occur. Though not an exhaustive list, these are fair criteria, but are rife with issues. In this chapter we use these building blocks to construct some more robust metrics.
 
-Every ranking method is truthful to its own definition, but generalising this to a Platonic ideal is impossible. Instead we could seek a unanimity between rankings. As we will see below, there are usually a large number of possible ranking approaches to any given problem. A good set of ranking methods should produce similar rankings when drawing upon similar definitions and assumptions.
+Every ranking method is truthful to its own definition, but generalising this to a Platonic ideal is impossible. Instead we could seek unanimity between rankings. As we will see below, there are usually a large number of possible ranking approaches to any given problem. A good set of ranking methods should produce similar rankings when drawing upon similar definitions and assumptions.
 
-Creating resistance to undue manipulation is a difficult problem, not only because defining `undue' is problematic. Any system of ranking must be manipulated by the results of comparisons between elements. The issues arise when a single element, player, or node can alter the rankings dramatically though only its behaviour. In our context of ranking news information influence we will use a simple definition. We want to minimise the influence that a single addition or removal of a node from the network has on the rankings.
+Creating resistance to undue manipulation is a difficult problem, not only because defining `undue' is problematic. Any system of ranking must be manipulated by the results of comparisons between elements. The issues arise when a single element, player, or node can alter the rankings dramatically through only its behaviour. In our context of ranking news information influence we will use a simple definition. We want to minimise the influence that a single addition or removal of a node from the network has on the rankings.
 
 This definition sits close to our third criterion, consistency of ranking. When a small change in the graph occurs, such as the removal of a single node, we would want the ranking change to be correspondingly small. This desire for rank stability stands in contrast to the motivating example above, where the centrality ranking underwent a total rearrangement during a critical transition. This is something a strong ranking should avoid. Further to this, consistency of ranking should be maintained across rankings, especially when these ranking methods are similar in nature. 
 
@@ -79,7 +79,7 @@ with a constant $\lambda \neq 0$, and where $A_{k, i}$ is the element of the wei
 \begin{equation}
 \lambda v^{\rm(eig)} = A v^{\rm(eig)}, 
 \end{equation}
-which can be solved as the dominant left-hand eigenvector of the adjacency matrix $A$. 
+that can be solved as the dominant left-hand eigenvector of the adjacency matrix $A$. 
 
 Importantly, both here and below, the direction of `flow' in the graph (the direction of each edge) is reversed before taking this calculation. Eigenvector centrality works such that the node \emph{being pointed to} is assigned the importance. Since we are interested in who originates information, we must point \emph{towards} the information source.
 
@@ -108,21 +108,21 @@ Massey's rating method~\cite{massey_statistical_1997,langville_whos_2012} draws 
 \begin{equation}
 r_i- r_j=y_k,
 \end{equation}
-which states when team $i$ with rating $r_i$ and team $j$ with rating $r_j$ face off, the the margin of victory, $y_k$ should be equal to their difference in ratings.
+which states when team $i$ with rating $r_i$ and team $j$ with rating $r_j$ face off, the margin of victory, $y_k$ should be equal to their difference in ratings.
 
 In our case, there is a single match between each pair of nodes to produce a vector $\mathbf{y}$ of length  $n(n-1)$ and a corresponding unknown rating vector $\mathbf{r}$ of length $n$. To complete this equation we create a $m\times n$ matrix $X$ which has two indicator variables in each row to denote two nodes played in each match.
 
-This system is best solved as a least squares problem, $X^TX\mathbf{r}=X^T\mathbf{y}$, however $X^TX$ is not invertible as the columns are linearly dependent. In Massey's method, the final row of the matrix $X^TX$ is replaced with ones, and the corresponded $X^T\mathbf{y}$ element is replace by a zero. This additional constraint ensures the ratings sum to one and forces the least squares problem to have a unique solution.
+This system is best solved as a least squares problem, $X^TX\mathbf{r}=X^T\mathbf{y}$, however $X^TX$ is not invertible as the columns are linearly dependent. In Massey's method, the final row of the matrix $X^TX$ is replaced with ones, and the corresponded $X^T\mathbf{y}$ element is replaced by a zero. This additional constraint ensures the ratings sum to one and forces the least squares problem to have a unique solution.
 
 \subsubsection{Topological sorting}
 
 Finally, we present a method of using a directed acyclic graph to produce the rankings. Consider again our question of examining which outlets produce the most novel information. In an idealised sense, we would hypothesise a set of super-producer nodes which produce a large amount of information which then trickles down the information flow graph in which each node absorbs information and re-synthesises it with new discussions, which is henceforth passed down to other nodes. This mental picture as described has a mathematical representation, a directed acyclic graph (DAG). Formally defined, a DAG is a graph that has no cycles, meaning that no sequence of edge hops will ever loop back on itself.
 
-Our densely connected information flow network is not itself a DAG as many cycles of flow exists. To create a DAG, we use a greedy approach where the lowest flow edges are removed sequentially until a DAG is achieved. This greedy approach removes 91.1\% of the edges, and although more optimal DAG creation approaches exist, this method is used for simplicity. 
+Our densely connected information flow network is not itself a DAG as many cycles of flow exist. To create a DAG, we use a greedy approach where the lowest flow edges are removed sequentially until a DAG is achieved. This greedy approach removes 91.1\% of the edges, and although more optimal DAG creation approaches exist, this method is used for simplicity. 
 
 Using this DAG a topological sorting can be created. A topological sorting is one in which node $x$ will be higher ranked than $y$ if and only if no directed edge or series of connected directed edges exist such that one could move from $y$ to $x$. Put more simply, if an edge in the DAG goes from an outlet $a$ to outlet $b$, then $a$ \underline{must} be higher ranked than $b$ in the sorting.
 
-This naive topological sorting has one major flaw in that it is not necessary unique\footnote{Naive topological sorts \emph{can} be unique if the DAG itself is a Hamiltonian path. This would require the constructed DAG to be a single long chain of flows, which our data most definitely does not produce.}. Consider the diamond problem as shown in \autoref{fig:rank_tikz_dag}, where a single node $a$ connects down to two nodes $b$ and $c$ which themselves individually connect down to node $d$. In such a DAG, $b$ and $c$ are interchangeable in the ranking (\emph{i.e.}\ orders $(a,b,c,d)$ and $(a,c,b,d)$ are both correct rankings).
+This naive topological sorting has one major flaw in that it is not necessarily unique\footnote{Naive topological sorts \emph{can} be unique if the DAG itself is a Hamiltonian path. This would require the constructed DAG to be a single long chain of flows, which our data most definitely does not produce.}. Consider the diamond problem as shown in \autoref{fig:rank_tikz_dag}, where a single node $a$ connects down to two nodes $b$ and $c$ which themselves individually connect down to node $d$. In such a DAG, $b$ and $c$ are interchangeable in the ranking (\emph{i.e.}\ orders $(a,b,c,d)$ and $(a,c,b,d)$ are both correct rankings).
 
 \begin{figure}[!htbp]
 \centering
@@ -138,7 +138,7 @@ This naive topological sorting has one major flaw in that it is not necessary un
 \draw [->, thick] (b) -- (d);
 
 \end{tikzpicture}
-\caption{A demonstration of the diamond problem which can give non-unique solutions to naive topological sorts on directed acyclic graphs.}\label{fig:rank_tikz_dag}
+\caption{A demonstration of the diamond problem that can give non-unique solutions to naive topological sorts on directed acyclic graphs.}\label{fig:rank_tikz_dag}
 \end{figure}
 
 To circumvent this challenge, a simple heuristic is imposed on the sorting. In cases where two nodes are interchangeable, the node with the highest outgoing edge weight sum is placed first. This draws from our context of the problem and place nodes with a greater net influence higher in such circumstances.
@@ -162,7 +162,7 @@ We run the experiment, removing each node once before putting it back, to test t
 \caption{Network ranking measures undergo sensitivity testing by ranking the network with a single node removed and comparing to the original ranking. This is repeated for each possible node removal in the network for all ranking measures. All measures show an average positive correlation between new and original rankings, with a high degree of variance in the sensitivity. PageRank has the best worst-case and worst average-case while topological sorting has the best average-case and worst worst-case.}\label{fig:rank_boxplots}
 \end{figure}
 
-The eigenvector, PageRank and Massey methods all have similar characteristics of sensitivity, while the topological sorting has a slightly more skewed distribution. The directed acyclic graph means that any node removal of a leaf (a node without any children), will have no change in the ranking aside from its removal, creating a strong cluster of results at $\tau=0$. In contrast, removal of nodes in the central paths of the DAG will likely result in a new DAG structure being generated, strongly altering the rankings.
+The eigenvector, PageRank and Massey methods all have similar characteristics of sensitivity, while the topological sorting has a slightly more skewed distribution. The directed acyclic graph means that any node removal of a leaf (a node without any children), will have no change in the ranking aside from its removal, creating a strong cluster of results at $\tau=1$. In contrast, removal of nodes in the central paths of the DAG will likely result in a new DAG structure being generated, strongly altering the rankings.
 
 Importantly, all of these measures have a comparable level of sensitivity, without any stand-outs. Does this mean any of the measures are sufficient as rankings? To answer this we turn to comparing the methods directly.
 
@@ -225,9 +225,9 @@ The search for a definitive ranking is a flawed venture. The purpose of informat
 % </purpose of ranking>
 
 % <what you can do>
-As discussed in \autoref{sec:gowiththeflow}, the network can be used to answer some specific questions, such as in comparing magnitude difference of edges or discussing a the flow between a single pair of organisations. These question can be extended to look at local neighbourhood structure. For example, if a news-media outlet has only outgoing information flow edges, than we can definitively say that they are a completely-net-contributor of information into the ecosystem. This is true for a single node in our data, \emph{USA Today}, although these out-flowing edges are mostly low weight and therefore susceptible to error from noise.
+As discussed in \autoref{sec:gowiththeflow}, the network can be used to answer some specific questions, such as in comparing magnitude difference of edges or discussing the flow between a single pair of organisations. These question can be extended to look at local neighbourhood structure. For example, if a news-media outlet has only outgoing information flow edges, then we can definitively say that they are a completely-net-contributor of information into the ecosystem. This is true for a single node in our data, \emph{USA Today}, although these out-flowing edges are mostly low weight and therefore susceptible to error from noise.
 
-Further, some clear network results can be extracted at the extremes of results. For example, while it may be hard to compare the total influence of the \emph{New York Times} to the total influence of the \emph{Washington Post}, we can concluded that both are more influential than \emph{Arkansas Democrat-Gazette} based on the rankings from all methods. 
+Further, some clear network results can be extracted at the extremes of results. For example, while it may be hard to compare the total influence of the \emph{New York Times} to the total influence of the \emph{Washington Post}, we can conclude that both are more influential than \emph{Arkansas Democrat-Gazette} based on the rankings from all methods. 
 % </what you can do>
 
 % ending
